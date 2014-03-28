@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="author" content="土肥龙">
+		<meta name="title" content=" 压缩感知初探">
+		<meta name="description" content="压缩感知初探">
+		
+		<title> 压缩感知初探</title>
+        <link rel="stylesheet" href="/media/css/main.css" />
+        <link rel="stylesheet" href="/media/css/favorite.css" />
+		<link rel="stylesheet" href="/media/css/pygments_native.css" />
+		<link rel="stylesheet" href="/media/css/lightbox.css" />
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Handlee">
+		<script type="text/javascript" src="/media/js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="/media/js/lightbox-2.6.min.js"></script>
+		<!---<link rel="stylesheet" href="/css/styles/monokai.css">
+        <script src="/js/highlight.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>-->
+		<!-- MathJax for LaTeX -->
+        <script type="text/x-mathjax-config"> 
+        MathJax.Hub.Config({
+            TeX: { equationNumbers: { autoNumber: "AMS" } }
+        }); 
+        </script>
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({ TeX: { extensions: ["autobold.js"] }});
+		</script>
+		<script type="text/javascript"
+			src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+		</script>
+
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ['$$$','$$$'], ["\\(","\\)"] ],
+                processEscapes: true
+            }
+        });
+        </script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+		
+    
+	</head>
+	<body>
+    <div id="aside-left">
+        <nav class="navigation">
+            <h3>导航</h3>
+            <li><a href="/">Home</a></li>
+            <li><a href="/archive.html">List</a></li>
+            <li><a href="/favorite.html">Favorite</a></li>
+            <li><a href="/tags.html">Tags</a></li>
+            <li><a href="/atom.xml">RSS</a></li>
+        </nav>
+        <nav class="navigation">
+            <h3>分类</h3>
+            
+            <li><a href="/category.html#开源">开源 (3)</a></li>
+            
+            <li><a href="/category.html#jekyll">jekyll (2)</a></li>
+            
+            <li><a href="/category.html#软件">软件 (2)</a></li>
+            
+            <li><a href="/category.html#computer vision">computer vision (3)</a></li>
+            
+            <li><a href="/category.html#parallel">parallel (1)</a></li>
+            
+        </nav>
+        <nav class="navigation">
+            <h3>链接</h3>
+            <li><a href="http://blog.sina.com.cn/loongfee" target="_blank">Sina</a></li>
+            <li><a href="http://www.cnblogs.com/loongfee/" target="_blank">cnBlog</a></li>
+        </nav>
+    </div>
+    <div id="main" role="main">
+		<header id="header">
+			<div class="header-info fix">
+				<h1><a href="/">淡朴若水</a></h1>
+                <h3>『遥感, 软件, 数学, IT杂碎』</h3>
+			</div>
+		</header><!--/header end-->
+
+		<section id="content" class="fix">
+			<script type="text/javascript" src="/media/js/navigation.js"></script>
+<article id="post">
+	<a href="#" class="icon-fullscreen r" title="点击全屏显示"></a>
+    <header>
+        <div class="unit-head">
+            <div class="unit-inner unit-head-inner">
+                <h1 id="page-title"> 压缩感知初探</h1>
+            </div><!-- unit-inner -->
+        </div><!-- unit-head -->
+    </header>
+	<div class="c9">
+		分类：
+			
+			<a href="/category.html#computer vision">computer vision</a>
+			
+			
+		&emsp;&emsp;&emsp;&emsp;
+		<time date="2013-10-22 00:00:00 +0800">2013-10-22</time>
+	</div>
+	<ul class="list-tag list-linear">
+        <li class="c9">标签：</li>
+        
+        
+
+
+  
+     
+    	<li><a href="/tags.html#Compressive Sensing-ref">Compressive Sensing <span>2</span></a></li>
+     
+    	<li><a href="/tags.html#Math-ref">Math <span>3</span></a></li>
+     
+    	<li><a href="/tags.html#Computer Vision-ref">Computer Vision <span>3</span></a></li>
+    
+  
+
+
+
+    </ul>
+
+	
+<h2 id="section">关于压缩感知的有关资源网站</h2>
+<ul>
+  <li><a href="http://dsp.rice.edu/cs">Rice University的资源</a></li>
+  <li><a href="http://terrytao.wordpress.com/2007/04/13/compressed-sensing-and-single-pixel-cameras/">陶哲轩介绍压缩感知的科普性博文</a></li>
+  <li><a href="http://www.youku.com/playlist_show/id_5267259.html">陶哲轩的compressive sensing（CS）的课程</a></li>
+  <li><a href="http://www.youtube.com/watch?v=i2aY7tZ5S7U&amp;list=PLC94A02A1218B24DF">Compressed Sensing by Terence Tao</a></li>
+  <li><a href="http://www.cvchina.info/2010/06/01/sparse-representation-vector-matrix-tensor-1/">稀疏表达：向量、矩阵与张量</a></li>
+</ul>
+
+	
+
+	<hr />
+	<div class="page fix">
+		
+		<span class="prev"><a href="/blog/2013/08/12/a-contrario-starting">←《 A Contrario：一种基于概率统计的无参数决策模型》</a></span>
+		
+		
+		<span class="next"><a href="/blog/2013/12/20/Minimum-Rank-Solutions">《 Minimum-Rank Solutions via Nuclear Norm Minimization》→</a></span>
+		
+	</div>
+	<hr />
+  <div class="comment">
+					
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'dannpu'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</article>
+
+<script type="text/javascript"  src="/media/js/jquery-min.js"></script>
+<script type="text/javascript" src="/media/js/Fullscreen.js"></script>
+<script type="text/javascript">
+$(function() {
+	var global = window;
+
+	// =============== 全屏显示 ==================
+	(function() {
+		var icon = $( 'a.icon-fullscreen' ),
+			fs, fsCallback;
+		
+		fsCallback = function(isFullscreen) {
+				if (isFullscreen) {
+					icon.addClass('expand').attr('title', 'ESC 退出全屏');
+				}
+				else {
+					icon.removeClass('expand').attr('title', '点击全屏显示');
+				}
+			};
+			
+		fs = new Fullscreen({
+				element: $('#post'),
+				noSafari: true,
+				callback: fsCallback
+			});
+
+		if (fs.fullscreenEnabled) {
+			icon.on('click', function() {
+				fs.toggleFullscreen();
+				return false;
+			});
+		}
+		else {
+			icon.hide();
+		}
+	})();
+});
+</script>
+		</section><!--/content end-->
+		<footer id="footer">
+			<p class="l">
+				&copy;2013 <a href="/">土肥龙</a> 
+				版权所有
+				<span class="c9">|</span>
+				欢迎转载，请注明出处并保留原文链接
+			</p>
+			<p class="r">Powered by <a href="https://github.com/mojombo/jekyll" target="_blank">Jekyll</a></p>
+			<p class="tac">
+				『上善若水，水善利万物而不争』
+			</p>
+		</footer><!--/footer end-->
+    </div>
+        
+    <div id="aside-right">
+    </div>
+		
+    <script>
+	(function(d, s) {
+		var js, fjs = d.getElementsByTagName(s)[0], load = function(url, id) {
+		if (d.getElementById(id)) {return;}
+		js = d.createElement(s); js.src = url; js.id = id;
+		fjs.parentNode.insertBefore(js, fjs);
+		};
+	load('//platform.twitter.com/widgets.js', 'tweetjs');
+	// load('https://apis.google.com/js/plusone.js', 'gplus1js'); // Checkout http://j.mp/ApDgMr for usage html for this is <div class="g-plusone" data-size="medium"></div>
+	// load('//connect.facebook.net/en_US/all.js#xfbml=1', 'fbjssdk'); // Checkout http://j.mp/wZw2xR for using open graph protorol html for this is <div class="fb-like" data-href="/blog/2013/10/22/Compressive-Sensing" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="verdana"></div>
+	}(document, 'script'));
+</script>
+<script>
+/*! A fix for the iOS orientationchange zoom bug.Script by @scottjehl, rebound by @wilto. MIT License.*/
+(function(j){var i=j.document;if(!i.querySelectorAll){return}var l=i.querySelectorAll("meta[name=viewport]")[0],a=l&&l.getAttribute("content"),h=a+", maximum-scale=1.0",d=a+", maximum-scale=10.0",g=true,c= j.orientation,k=0;if(!l){return}function f(){l.setAttribute("content",d);g=true}function b(){l.setAttribute("content",h);g=false}function e(m){c=Math.abs(j.orientation);k=Math.abs(m.gamma);if(k>8&&c===0){if(g){b()}}else{if(!g){f()}}}j.addEventListener("orientationchange",f,false);j.addEventListener("deviceorientation",e,false)})(this);
+</script>	
+
+	</body>
+</html>

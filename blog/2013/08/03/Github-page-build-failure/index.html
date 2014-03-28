@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="author" content="土肥龙">
+		<meta name="title" content="利用本地编译结果替代Github Page自动生成网站">
+		<meta name="description" content="利用本地编译结果替代Github Page自动生成网站">
+		
+		<title>利用本地编译结果替代Github Page自动生成网站</title>
+        <link rel="stylesheet" href="/media/css/main.css" />
+        <link rel="stylesheet" href="/media/css/favorite.css" />
+		<link rel="stylesheet" href="/media/css/pygments_native.css" />
+		<link rel="stylesheet" href="/media/css/lightbox.css" />
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Handlee">
+		<script type="text/javascript" src="/media/js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="/media/js/lightbox-2.6.min.js"></script>
+		<!---<link rel="stylesheet" href="/css/styles/monokai.css">
+        <script src="/js/highlight.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>-->
+		<!-- MathJax for LaTeX -->
+        <script type="text/x-mathjax-config"> 
+        MathJax.Hub.Config({
+            TeX: { equationNumbers: { autoNumber: "AMS" } }
+        }); 
+        </script>
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({ TeX: { extensions: ["autobold.js"] }});
+		</script>
+		<script type="text/javascript"
+			src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+		</script>
+
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ['$$$','$$$'], ["\\(","\\)"] ],
+                processEscapes: true
+            }
+        });
+        </script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+		
+    
+	</head>
+	<body>
+    <div id="aside-left">
+        <nav class="navigation">
+            <h3>导航</h3>
+            <li><a href="/">Home</a></li>
+            <li><a href="/archive.html">List</a></li>
+            <li><a href="/favorite.html">Favorite</a></li>
+            <li><a href="/tags.html">Tags</a></li>
+            <li><a href="/atom.xml">RSS</a></li>
+        </nav>
+        <nav class="navigation">
+            <h3>分类</h3>
+            
+            <li><a href="/category.html#开源">开源 (3)</a></li>
+            
+            <li><a href="/category.html#jekyll">jekyll (2)</a></li>
+            
+            <li><a href="/category.html#软件">软件 (2)</a></li>
+            
+            <li><a href="/category.html#computer vision">computer vision (3)</a></li>
+            
+            <li><a href="/category.html#parallel">parallel (1)</a></li>
+            
+        </nav>
+        <nav class="navigation">
+            <h3>链接</h3>
+            <li><a href="http://blog.sina.com.cn/loongfee" target="_blank">Sina</a></li>
+            <li><a href="http://www.cnblogs.com/loongfee/" target="_blank">cnBlog</a></li>
+        </nav>
+    </div>
+    <div id="main" role="main">
+		<header id="header">
+			<div class="header-info fix">
+				<h1><a href="/">淡朴若水</a></h1>
+                <h3>『遥感, 软件, 数学, IT杂碎』</h3>
+			</div>
+		</header><!--/header end-->
+
+		<section id="content" class="fix">
+			<script type="text/javascript" src="/media/js/navigation.js"></script>
+<article id="post">
+	<a href="#" class="icon-fullscreen r" title="点击全屏显示"></a>
+    <header>
+        <div class="unit-head">
+            <div class="unit-inner unit-head-inner">
+                <h1 id="page-title">利用本地编译结果替代Github Page自动生成网站</h1>
+            </div><!-- unit-inner -->
+        </div><!-- unit-head -->
+    </header>
+	<div class="c9">
+		分类：
+			
+			<a href="/category.html#jekyll">jekyll</a>
+			
+			
+		&emsp;&emsp;&emsp;&emsp;
+		<time date="2013-08-03 00:00:00 +0800">2013-08-03</time>
+	</div>
+	<ul class="list-tag list-linear">
+        <li class="c9">标签：</li>
+        
+        
+
+
+  
+     
+    	<li><a href="/tags.html#Jekyll-ref">Jekyll <span>3</span></a></li>
+     
+    	<li><a href="/tags.html#Github-ref">Github <span>2</span></a></li>
+     
+    	<li><a href="/tags.html#Plugins-ref">Plugins <span>1</span></a></li>
+    
+  
+
+
+
+    </ul>
+
+	
+<h2 id="section">缘起</h2>
+<p><code>Github Page</code> 提供了自动编译 <code>Jekyll</code> 网站的功能，我们只需要将 <code>Jekyll</code> 网站代码 <code>push</code> 到 <code>Github</code> 上，接下来的事情就都可以交给 <code>Github Page</code>，一般几分钟后就可以看到由 <code>Github Page</code> 重新编译生成的网站了。那末，好好的服务放弃不用，偏偏折腾着直接利用本地编译结果是要闹哪样呢？其实这么捣鼓还真不是因为DT，确实是事发有因。<code>Github Page</code> 虽然方便，但是它还是存在几个问题：</p>
+
+<ol>
+  <li>
+    <p>[<code>Github Page</code>] 不支持插件<br />
+虽然[<code>Github Page</code>] 服务器不提供插件支持，但是如果需要使用插件可以将 <code>*.rub</code> 文件放到网站根目录下的 <code>_plugins</code> 文件夹中。遗憾的是这种方式并非万能的，对于一些小巧的、相对独立的插件是可行的，但是对诸如“让Jekyll将Pandoc作为Markdown的渲染器[^loong]”的问题，这种方式就显得力不从心了。</p>
+  </li>
+  <li>
+    <p>[<code>Github Page</code>] 服务器上软件的版本偏低<br />
+[<code>Github Page</code>] 服务器提供的编译平台是一定的，出于稳定性和大用户群的体验考虑，服务器不可能频繁地更新编译平台，因此其编译平台的版本通常比较滞后。例如写作本文时，[<code>Github Page</code>] 服务器提供的 <code>Jekyll</code> 及其它依赖库的版本为</p>
+  </li>
+</ol>
+
+<div class="highlight"><pre><code class="bash">ruby <span class="s1">&#39;1.9.3&#39;</span>
+gem <span class="s1">&#39;jekyll&#39;</span>,     <span class="s1">&#39;=1.0.3&#39;</span>
+gem <span class="s1">&#39;liquid&#39;</span>,     <span class="s1">&#39;=2.5.1&#39;</span>
+gem <span class="s1">&#39;redcarpet&#39;</span>,  <span class="s1">&#39;=2.2.2&#39;</span>
+gem <span class="s1">&#39;maruku&#39;</span>,     <span class="s1">&#39;=0.6.1&#39;</span>
+gem <span class="s1">&#39;rdiscount&#39;</span>,  <span class="s1">&#39;=1.6.8&#39;</span>
+gem <span class="s1">&#39;RedCloth&#39;</span>,   <span class="s1">&#39;=4.2.9&#39;</span>
+gem <span class="s1">&#39;kramdown&#39;</span>,   <span class="s1">&#39;=1.0.2&#39;</span>
+</code></pre></div>
+
+<p>而时下的 <code>ruby</code> 最新版本为2.0.0p195, <code>rdiscount</code> 的最新版本则是2.1.6，有着不小的差距。这样就出现兼容性问题了，本地使用新版本平台能够编译通过的代码提交到 [<code>Github Page</code>] 服务器就可能 “<code>page build failed</code>” 了。最保险的办法就是将本地的编译平台按照 [<code>Github Page</code>] 服务器上地版本来配置，并且不使用插件，这样就能保证本地编译通过的代码提交到 [<code>Github Page</code>] 后不出现问题了。但是新版本的新功能和bug的修复无法享用了。</p>
+
+<ol>
+  <li>利用 [<code>Github Page</code>] 编译并发布网站相对比较耗时 <br />
+很显然，既然已经在本地生成好了网站，再将代码上传到服务器重新编译一遍是挺多余的。事实上有时候在晚上上传上去的代码到第二天才会生成好网站。当然，直接将编译好的结果文件 <code>push</code> 到 <code>Github</code> 也不是立即生效的，但至少不会担心 “<code>page build failed</code>” 的错误了。</li>
+</ol>
+
+<h2 id="section-1">解决方案</h2>
+<p>[<code>Github Page</code>] 官网上提到在网站根目录下创建一个名为 <code>.nojekyll</code> 的文件就可以关闭服务器端的 <code>Jekyll</code> 编译器，但是即使将 <code>_site</code> 文件夹上传到服务器上，网站也不会被发布。笔者找到的解决方案是在 <code>Github</code> 该网站的 <code>Repositor</code> 中创建一个新的 <code>branch</code>，然后用这两个分支分别管理源代码和生成的网站文件。下面介绍具体的实施步骤[^varn]。<br />
+1. 用 <code>Github</code> 创建一个 <code>source</code> 分支<br />
+打开 <code>git</code> 控制台，进入到网站工程目录（以后的操作均在该目录下进行）。用下面的命令将 <code>master</code> 分支中的文件移动到一个新的分支中（命名为 <code>source</code> ）。</p>
+
+<div class="highlight"><pre><code class="bash">git checkout -b <span class="nb">source </span>master
+</code></pre></div>
+
+<ol>
+  <li>将源代码上传到 <code>source</code> 分支<br />
+使用下面的命令将这个新的分支 <code>push</code> 到 <code>Github</code> 上</li>
+</ol>
+
+<div class="highlight"><pre><code class="bash">git push -u origin <span class="nb">source</span>
+</code></pre></div>
+
+<ol>
+  <li>在 <code>Github</code> 上修改 <code>source</code> 为默认分支<br />
+登录到 <code>Github</code>，在 <code>repository</code> 设置中将该工程的默认分支设置为 <code>source</code>。这样，当其他人访问你的 <code>Github</code> 是默认看到的就是你的源代码而不是生成的网站了。   </li>
+  <li>编译网站代码并上传到 <code>master</code> 分支
+这一步的原理是将 <code>source</code> 分支中的代码 <code>build</code> 到一个临时文件夹中，然后将临时文件夹中的结果文件 <code>push</code> 到 <code>master</code> 分支中去。步骤稍微有点复杂，如果每次上传网站都要重复操作的话就太麻烦了，好在我们可以将这些机械的操作写到 <code>batch</code> 批处理中自动完成。</li>
+</ol>
+
+<div class="highlight"><pre><code class="bat"><span class="c">:: 发布到github</span>
+
+<span class="p">@</span><span class="k">echo</span> <span class="k">off</span>
+
+<span class="c">:: 用户名</span>
+<span class="k">set</span> <span class="nv">usr</span><span class="o">=</span>anyone
+
+<span class="c">:: 当前日期</span>
+<span class="k">set</span> <span class="s2">&quot;Ymd=%date:~,4%%date:~5,2%%date:~8,2%&quot;</span>
+
+<span class="c">:: 临时编译目录</span>
+<span class="k">set</span> <span class="nv">build_path</span><span class="o">=</span><span class="s2">&quot;%TEMP%Jekyll_build&quot;</span>
+
+<span class="c">:: 创建临时编译目录</span>
+<span class="c">:: 如果已经存在则删除后重新创建</span>
+
+<span class="k">if</span> <span class="k">exist</span> <span class="nv">%build_path%</span> (
+    <span class="c">::echo !build_path! exist</span>
+    rd <span class="n">/s</span> <span class="n">/q</span> <span class="nv">%build_path%</span>
+    <span class="k">md</span> <span class="nv">%build_path%</span>
+    ) <span class="k">else</span> (
+    <span class="c">::echo !build_path! missing</span>
+    <span class="k">md</span> <span class="nv">%build_path%</span>
+)
+
+<span class="c">:: 支持utf-8编码</span>
+chcp <span class="m">65001</span>
+<span class="c">:: 编译网站</span>
+<span class="k">call</span> jekyll build -d <span class="nv">%build_path%</span>
+
+<span class="c">:: 如果编译出错，直接跳出</span>
+<span class="k">if</span>   <span class="nv">%errorlevel%</span> <span class="o">NEQ</span> <span class="m">0</span>  exit
+
+<span class="c">:: 如果编译没有错误就发布网站</span>
+<span class="k">cd</span> <span class="n">/d</span> <span class="nv">%build_path%</span>
+C:
+<span class="k">del</span> <span class="n">/q/a/f/s</span> <span class="nv">%build_path%</span>\*.bat
+<span class="k">call</span> git init
+<span class="k">call</span> git add .
+<span class="k">call</span> git commit -m <span class="s2">&quot;updated site %ymd%&quot;</span>
+<span class="k">call</span> git remote add origin git@github.com:!usr!<span class="n">/!usr!.github.com.git</span>
+<span class="k">call</span> git remote <span class="k">set</span>-url origin git@github.com:!usr!<span class="n">/!usr!.github.com.git</span>
+<span class="k">call</span> git push origin master --force
+
+<span class="c">:: 返回当前目录</span>
+<span class="k">cd</span> <span class="n">/d</span> <span class="nv">%~dp0</span>
+
+<span class="c">:: 删除临时编译目录</span>
+rd <span class="n">/s</span> <span class="n">/q</span> !build_path!
+</code></pre></div>
+
+<p>创建一个 <code>windows batch</code> 文件（扩展名为 <code>bat</code>），将以上代码复制粘贴到这个文件中，并把代码 <code>set usr=anyone</code> 中的 <code>anyone</code> 改成你自己 <code>Github</code> 的用户名（也可以直接<a href="/assets/share/publish.bat">下载这个<code>bat</code>文件</a>），然后这个文件存放在网站代码的根目录下，每次需要发布网站的时候直接运行这个<code>bat</code>文件即可。<br />
+命令执行过程中可能会出现警告，只要最后能执行通过就没有问题。</p>
+
+<p>[<code>Github Page</code>]: http://pages.github.com/ “”
+[^varn]: Jekyll : Handling Github page build failure and Jekyll plugins on Github:<a href="http://varunbpatil.github.io/2013/07/06/jekyll-build-fail/#.UfumtI8lzRe">http://varunbpatil.github.io/2013/07/06/jekyll-build-fail/#.UfumtI8lzRe</a>
+[^loong]:  让Jekyll将Pandoc作为Markdown的渲染器: <a href="http://loongfee.github.io/blog/2013/08/02/new-post/">http://loongfee.github.io/blog/2013/08/02/new-post/</a></p>
+
+	
+
+	<hr />
+	<div class="page fix">
+		
+		<span class="prev"><a href="/blog/2013/08/02/new-post">←《让Jekyll将Pandoc作为Markdown的渲染器》</a></span>
+		
+		
+		<span class="next"><a href="/blog/2013/08/05/feedly">《Feedly 快捷键》→</a></span>
+		
+	</div>
+	<hr />
+  <div class="comment">
+					
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'dannpu'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</article>
+
+<script type="text/javascript"  src="/media/js/jquery-min.js"></script>
+<script type="text/javascript" src="/media/js/Fullscreen.js"></script>
+<script type="text/javascript">
+$(function() {
+	var global = window;
+
+	// =============== 全屏显示 ==================
+	(function() {
+		var icon = $( 'a.icon-fullscreen' ),
+			fs, fsCallback;
+		
+		fsCallback = function(isFullscreen) {
+				if (isFullscreen) {
+					icon.addClass('expand').attr('title', 'ESC 退出全屏');
+				}
+				else {
+					icon.removeClass('expand').attr('title', '点击全屏显示');
+				}
+			};
+			
+		fs = new Fullscreen({
+				element: $('#post'),
+				noSafari: true,
+				callback: fsCallback
+			});
+
+		if (fs.fullscreenEnabled) {
+			icon.on('click', function() {
+				fs.toggleFullscreen();
+				return false;
+			});
+		}
+		else {
+			icon.hide();
+		}
+	})();
+});
+</script>
+		</section><!--/content end-->
+		<footer id="footer">
+			<p class="l">
+				&copy;2013 <a href="/">土肥龙</a> 
+				版权所有
+				<span class="c9">|</span>
+				欢迎转载，请注明出处并保留原文链接
+			</p>
+			<p class="r">Powered by <a href="https://github.com/mojombo/jekyll" target="_blank">Jekyll</a></p>
+			<p class="tac">
+				『上善若水，水善利万物而不争』
+			</p>
+		</footer><!--/footer end-->
+    </div>
+        
+    <div id="aside-right">
+    </div>
+		
+    <script>
+	(function(d, s) {
+		var js, fjs = d.getElementsByTagName(s)[0], load = function(url, id) {
+		if (d.getElementById(id)) {return;}
+		js = d.createElement(s); js.src = url; js.id = id;
+		fjs.parentNode.insertBefore(js, fjs);
+		};
+	load('//platform.twitter.com/widgets.js', 'tweetjs');
+	// load('https://apis.google.com/js/plusone.js', 'gplus1js'); // Checkout http://j.mp/ApDgMr for usage html for this is <div class="g-plusone" data-size="medium"></div>
+	// load('//connect.facebook.net/en_US/all.js#xfbml=1', 'fbjssdk'); // Checkout http://j.mp/wZw2xR for using open graph protorol html for this is <div class="fb-like" data-href="/blog/2013/08/03/Github-page-build-failure" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="verdana"></div>
+	}(document, 'script'));
+</script>
+<script>
+/*! A fix for the iOS orientationchange zoom bug.Script by @scottjehl, rebound by @wilto. MIT License.*/
+(function(j){var i=j.document;if(!i.querySelectorAll){return}var l=i.querySelectorAll("meta[name=viewport]")[0],a=l&&l.getAttribute("content"),h=a+", maximum-scale=1.0",d=a+", maximum-scale=10.0",g=true,c= j.orientation,k=0;if(!l){return}function f(){l.setAttribute("content",d);g=true}function b(){l.setAttribute("content",h);g=false}function e(m){c=Math.abs(j.orientation);k=Math.abs(m.gamma);if(k>8&&c===0){if(g){b()}}else{if(!g){f()}}}j.addEventListener("orientationchange",f,false);j.addEventListener("deviceorientation",e,false)})(this);
+</script>	
+
+	</body>
+</html>

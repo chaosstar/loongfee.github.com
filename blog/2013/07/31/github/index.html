@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="author" content="土肥龙">
+		<meta name="title" content="使用GitHub管理你的工程">
+		<meta name="description" content="">
+		
+		<title>使用GitHub管理你的工程</title>
+        <link rel="stylesheet" href="/media/css/main.css" />
+        <link rel="stylesheet" href="/media/css/favorite.css" />
+		<link rel="stylesheet" href="/media/css/pygments_native.css" />
+		<link rel="stylesheet" href="/media/css/lightbox.css" />
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Handlee">
+		<script type="text/javascript" src="/media/js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="/media/js/lightbox-2.6.min.js"></script>
+		<!---<link rel="stylesheet" href="/css/styles/monokai.css">
+        <script src="/js/highlight.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>-->
+		<!-- MathJax for LaTeX -->
+        <script type="text/x-mathjax-config"> 
+        MathJax.Hub.Config({
+            TeX: { equationNumbers: { autoNumber: "AMS" } }
+        }); 
+        </script>
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({ TeX: { extensions: ["autobold.js"] }});
+		</script>
+		<script type="text/javascript"
+			src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+		</script>
+
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ['$$$','$$$'], ["\\(","\\)"] ],
+                processEscapes: true
+            }
+        });
+        </script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+		
+    
+	</head>
+	<body>
+    <div id="aside-left">
+        <nav class="navigation">
+            <h3>导航</h3>
+            <li><a href="/">Home</a></li>
+            <li><a href="/archive.html">List</a></li>
+            <li><a href="/favorite.html">Favorite</a></li>
+            <li><a href="/tags.html">Tags</a></li>
+            <li><a href="/atom.xml">RSS</a></li>
+        </nav>
+        <nav class="navigation">
+            <h3>分类</h3>
+            
+            <li><a href="/category.html#开源">开源 (3)</a></li>
+            
+            <li><a href="/category.html#jekyll">jekyll (2)</a></li>
+            
+            <li><a href="/category.html#软件">软件 (2)</a></li>
+            
+            <li><a href="/category.html#computer vision">computer vision (3)</a></li>
+            
+            <li><a href="/category.html#parallel">parallel (1)</a></li>
+            
+        </nav>
+        <nav class="navigation">
+            <h3>链接</h3>
+            <li><a href="http://blog.sina.com.cn/loongfee" target="_blank">Sina</a></li>
+            <li><a href="http://www.cnblogs.com/loongfee/" target="_blank">cnBlog</a></li>
+        </nav>
+    </div>
+    <div id="main" role="main">
+		<header id="header">
+			<div class="header-info fix">
+				<h1><a href="/">淡朴若水</a></h1>
+                <h3>『遥感, 软件, 数学, IT杂碎』</h3>
+			</div>
+		</header><!--/header end-->
+
+		<section id="content" class="fix">
+			<script type="text/javascript" src="/media/js/navigation.js"></script>
+<article id="post">
+	<a href="#" class="icon-fullscreen r" title="点击全屏显示"></a>
+    <header>
+        <div class="unit-head">
+            <div class="unit-inner unit-head-inner">
+                <h1 id="page-title">使用GitHub管理你的工程</h1>
+            </div><!-- unit-inner -->
+        </div><!-- unit-head -->
+    </header>
+	<div class="c9">
+		分类：
+			
+			<a href="/category.html#开源">开源</a>
+			
+			
+		&emsp;&emsp;&emsp;&emsp;
+		<time date="2013-07-31 00:00:00 +0800">2013-07-31</time>
+	</div>
+	<ul class="list-tag list-linear">
+        <li class="c9">标签：</li>
+        
+        
+
+
+  
+     
+    	<li><a href="/tags.html#Github-ref">Github <span>2</span></a></li>
+    
+  
+
+
+
+    </ul>
+
+	<p>无可非议，这是一个计算机的时代，也是一个代码的时代。作为一个资深码农，你一定写过无数段小代码，无数个小程序了，实际应用中需要用到的很多代码段或者小工具都可以从自己积累的程序中直接拿出来。然而事实并没有这么简单，你可能需要在不同的电脑上编写程序，你也可能根据实际使用的情况对你以前的代码进行修改，随之而来的就是<strong>“版本灾难”</strong>，这往往是令人抓狂的。另外，现在软件项目越来越大，大多数实际项目已经不再像过去那样只需要一两个人就能完成了。不同的人在不同的终端上几乎同时地对同一个项目进行编辑，可想而知，版本的管理将是多么繁琐的一件事情。那么有没有什么方法可以高效地管理你的工程呢？这就是这篇文章要解决的问题。</p>
+
+<h2 id="github">GitHub是什么</h2>
+
+<p><a href="https://github.com/">GitHub</a>是一家公司，位于旧金山，由<a href="https://github.com/defunkt">Chris Wanstrath</a>, <a href="https://github.com/pjhyett">PJ Hyett</a> 与<a href="https://github.com/mojombo">Tom Preston-Werner</a>三位开发者在2008年4月创办。迄今拥有59名全职员工，主要提供基于Git的版本托管服务。GitHub是目前最流行的开源托管服务，已经成为全球最大的开源项目聚集地。GitHub的服务分为免费和收费两种。免费账号可以自由的发布项目（不过每个项目有100M的大小限制），并且所发布的项目必须是公开源码的。付费账号则可以发布私有的项目。</p>
+
+<blockquote>
+  <p>对于一般的开源项目的用户而言，100M的大小是足够的。但如果你的代码是商业保密的或者你的项目非常的大，那么你就需要成为付费用户以便GitHub不公开你的源代码或者提供更大的存储空间。</p>
+</blockquote>
+
+<p>好的，下面就从注册GitHub账号开始，逐步介绍如何使用GitHub管理你的软件项目。GitHub的平台无关性表现非常好，但是本文只介绍windows下的使用方法。</p>
+
+<h2 id="github-1">注册GitHub账号</h2>
+
+<p>打开<a href="https://github.com/">GitHub</a>网站的主页，按照提示输入待注册的用户名、邮箱和密码，然后点“Sign up for GitHub”，如下图所示。<img src="/assets/images/20130801-sign_up.png" alt="注册" />
+如果不出意外的话就注册成功了（如果你的密码设置的过于简单，可能会提示你重新设置密码）。对，就这么简单。</p>
+
+<h2 id="github-2">GitHub工具</h2>
+
+<p>GitHub最初是在linux下面使用的，一切操作都是用命令来实现的，对于windows用户来说还是很不方便的。好在GitHub最近发布了一个windows下的管理工具，操作简单直观，界面是metro UI 风格，推荐使用这个管理工具。相关说明和下载地址如下：</p>
+
+<blockquote>
+  <p>官方就这个工具发布的说明：<a href="https://github.com/blog/1127-github-for-windows">https://github.com/blog/1127-github-for-windows</a></p>
+
+  <p>官方网址：<a href="http://windows.github.com/">http://windows.github.com/</a></p>
+
+  <p>点击此处下载：<a href="http://github-windows.s3.amazonaws.com/setup.exe">http://github-windows.s3.amazonaws.com/setup.exe</a></p>
+</blockquote>
+
+<p>下载的setup.exe是一个在线安装器，运行后会开始在线安装，安装过程可能需要几分钟（需要下载安装程序）。
+安装完后会出现”Git Shell”和”GitHub”两个程序，其中”Git Shell”是命令行模式，”GitHub”是图形界面模式，这里打开”GitHub”，出现登录界面，如下图所示。
+<img src="/assets/images/20130801-github_login.png" alt="登录客户端" />
+## 创建一个项目（Repositories）</p>
+
+	
+
+	<hr />
+	<div class="page fix">
+		
+		
+		<span class="next"><a href="/blog/2013/07/31/jekyll">《Jekyll上手篇》→</a></span>
+		
+	</div>
+	<hr />
+  <div class="comment">
+					
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'dannpu'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</article>
+
+<script type="text/javascript"  src="/media/js/jquery-min.js"></script>
+<script type="text/javascript" src="/media/js/Fullscreen.js"></script>
+<script type="text/javascript">
+$(function() {
+	var global = window;
+
+	// =============== 全屏显示 ==================
+	(function() {
+		var icon = $( 'a.icon-fullscreen' ),
+			fs, fsCallback;
+		
+		fsCallback = function(isFullscreen) {
+				if (isFullscreen) {
+					icon.addClass('expand').attr('title', 'ESC 退出全屏');
+				}
+				else {
+					icon.removeClass('expand').attr('title', '点击全屏显示');
+				}
+			};
+			
+		fs = new Fullscreen({
+				element: $('#post'),
+				noSafari: true,
+				callback: fsCallback
+			});
+
+		if (fs.fullscreenEnabled) {
+			icon.on('click', function() {
+				fs.toggleFullscreen();
+				return false;
+			});
+		}
+		else {
+			icon.hide();
+		}
+	})();
+});
+</script>
+		</section><!--/content end-->
+		<footer id="footer">
+			<p class="l">
+				&copy;2013 <a href="/">土肥龙</a> 
+				版权所有
+				<span class="c9">|</span>
+				欢迎转载，请注明出处并保留原文链接
+			</p>
+			<p class="r">Powered by <a href="https://github.com/mojombo/jekyll" target="_blank">Jekyll</a></p>
+			<p class="tac">
+				『上善若水，水善利万物而不争』
+			</p>
+		</footer><!--/footer end-->
+    </div>
+        
+    <div id="aside-right">
+    </div>
+		
+    <script>
+	(function(d, s) {
+		var js, fjs = d.getElementsByTagName(s)[0], load = function(url, id) {
+		if (d.getElementById(id)) {return;}
+		js = d.createElement(s); js.src = url; js.id = id;
+		fjs.parentNode.insertBefore(js, fjs);
+		};
+	load('//platform.twitter.com/widgets.js', 'tweetjs');
+	// load('https://apis.google.com/js/plusone.js', 'gplus1js'); // Checkout http://j.mp/ApDgMr for usage html for this is <div class="g-plusone" data-size="medium"></div>
+	// load('//connect.facebook.net/en_US/all.js#xfbml=1', 'fbjssdk'); // Checkout http://j.mp/wZw2xR for using open graph protorol html for this is <div class="fb-like" data-href="/blog/2013/07/31/github" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="verdana"></div>
+	}(document, 'script'));
+</script>
+<script>
+/*! A fix for the iOS orientationchange zoom bug.Script by @scottjehl, rebound by @wilto. MIT License.*/
+(function(j){var i=j.document;if(!i.querySelectorAll){return}var l=i.querySelectorAll("meta[name=viewport]")[0],a=l&&l.getAttribute("content"),h=a+", maximum-scale=1.0",d=a+", maximum-scale=10.0",g=true,c= j.orientation,k=0;if(!l){return}function f(){l.setAttribute("content",d);g=true}function b(){l.setAttribute("content",h);g=false}function e(m){c=Math.abs(j.orientation);k=Math.abs(m.gamma);if(k>8&&c===0){if(g){b()}}else{if(!g){f()}}}j.addEventListener("orientationchange",f,false);j.addEventListener("deviceorientation",e,false)})(this);
+</script>	
+
+	</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="author" content="土肥龙">
+		<meta name="title" content=" Minimum-Rank Solutions via Nuclear Norm Minimization">
+		<meta name="description" content="Minimum-Rank Solutions via Nuclear Norm Minimization">
+		
+		<title> Minimum-Rank Solutions via Nuclear Norm Minimization</title>
+        <link rel="stylesheet" href="/media/css/main.css" />
+        <link rel="stylesheet" href="/media/css/favorite.css" />
+		<link rel="stylesheet" href="/media/css/pygments_native.css" />
+		<link rel="stylesheet" href="/media/css/lightbox.css" />
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Handlee">
+		<script type="text/javascript" src="/media/js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="/media/js/lightbox-2.6.min.js"></script>
+		<!---<link rel="stylesheet" href="/css/styles/monokai.css">
+        <script src="/js/highlight.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>-->
+		<!-- MathJax for LaTeX -->
+        <script type="text/x-mathjax-config"> 
+        MathJax.Hub.Config({
+            TeX: { equationNumbers: { autoNumber: "AMS" } }
+        }); 
+        </script>
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({ TeX: { extensions: ["autobold.js"] }});
+		</script>
+		<script type="text/javascript"
+			src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+		</script>
+
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ['$$$','$$$'], ["\\(","\\)"] ],
+                processEscapes: true
+            }
+        });
+        </script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+		
+    
+	</head>
+	<body>
+    <div id="aside-left">
+        <nav class="navigation">
+            <h3>导航</h3>
+            <li><a href="/">Home</a></li>
+            <li><a href="/archive.html">List</a></li>
+            <li><a href="/favorite.html">Favorite</a></li>
+            <li><a href="/tags.html">Tags</a></li>
+            <li><a href="/atom.xml">RSS</a></li>
+        </nav>
+        <nav class="navigation">
+            <h3>分类</h3>
+            
+            <li><a href="/category.html#开源">开源 (3)</a></li>
+            
+            <li><a href="/category.html#jekyll">jekyll (2)</a></li>
+            
+            <li><a href="/category.html#软件">软件 (2)</a></li>
+            
+            <li><a href="/category.html#computer vision">computer vision (3)</a></li>
+            
+            <li><a href="/category.html#parallel">parallel (1)</a></li>
+            
+        </nav>
+        <nav class="navigation">
+            <h3>链接</h3>
+            <li><a href="http://blog.sina.com.cn/loongfee" target="_blank">Sina</a></li>
+            <li><a href="http://www.cnblogs.com/loongfee/" target="_blank">cnBlog</a></li>
+        </nav>
+    </div>
+    <div id="main" role="main">
+		<header id="header">
+			<div class="header-info fix">
+				<h1><a href="/">淡朴若水</a></h1>
+                <h3>『遥感, 软件, 数学, IT杂碎』</h3>
+			</div>
+		</header><!--/header end-->
+
+		<section id="content" class="fix">
+			<script type="text/javascript" src="/media/js/navigation.js"></script>
+<article id="post">
+	<a href="#" class="icon-fullscreen r" title="点击全屏显示"></a>
+    <header>
+        <div class="unit-head">
+            <div class="unit-inner unit-head-inner">
+                <h1 id="page-title"> Minimum-Rank Solutions via Nuclear Norm Minimization</h1>
+            </div><!-- unit-inner -->
+        </div><!-- unit-head -->
+    </header>
+	<div class="c9">
+		分类：
+			
+			<a href="/category.html#computer vision">computer vision</a>
+			
+			
+		&emsp;&emsp;&emsp;&emsp;
+		<time date="2013-12-20 00:00:00 +0800">2013-12-20</time>
+	</div>
+	<ul class="list-tag list-linear">
+        <li class="c9">标签：</li>
+        
+        
+
+
+  
+     
+    	<li><a href="/tags.html#Compressive Sensing-ref">Compressive Sensing <span>2</span></a></li>
+     
+    	<li><a href="/tags.html#Math-ref">Math <span>3</span></a></li>
+     
+    	<li><a href="/tags.html#Computer Vision-ref">Computer Vision <span>3</span></a></li>
+     
+    	<li><a href="/tags.html#Nuclear Norm-ref">Nuclear Norm <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#Optimization-ref">Optimization <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#Minimum-Rank-ref">Minimum-Rank <span>1</span></a></li>
+    
+  
+
+
+
+    </ul>
+
+	
+<h2 id="section">1. 几种范数</h2>
+<p>矩阵 $X \in \mathbb{R}^{m \times n}$，$\sigma_i(X)$ 表示 $X$ 的第 $i$ 大奇异值（即 $XX’$ 的第 $i$ 大特征值的均方根）<a href="#recht2010guaranteed">(Recht, Fazel &#38; Parrilo, 2010)</a>。$r$ 表示矩阵 $X$ 的秩（Rank），也等于 $X$ 非零奇异值的个数。对维度相同的两个矩阵 $X$ 和 $Y$，我们定义在 $\mathbb{R}^{m \times n}$上的内积为</p>
+
+<p>\begin{equation}\label{eq:inner}
+\langle X,Y \rangle := Tr(X’Y) = \sum_{i=1}^m \sum_{j=1}^n X_{ij}Y_{ij}
+\end{equation}</p>
+
+<h3 id="frobenius">1. Frobenius范数</h3>
+<p>矩阵的Frobenius范数又称Hilbert-Schmidt范数，用<script type="math/tex">\|  \cdot \|_F</script>表示。Frobenius范数也等于奇异值向量的Euclidean范数（或称<script type="math/tex">\ell_2</script>范数），基于内积\eqref{eq:inner}来计算，即</p>
+
+<p>\begin{equation}\label{eq:Frobenius}
+\lVert X \rVert_F := \sqrt{\langle X,X \rangle} = \sqrt{Tr(X’X)} = \left( \sum_{i=1}^m \sum_{j=1}^n X_{ij}^2 \right)^\frac{1}{2} =  \left( \sum_{i=1}^r {\sigma_i}^2 \right)^\frac{1}{2}
+\end{equation}</p>
+
+<h3 id="section-1">2. 算子范数</h3>
+<p>矩阵的算子范数（operator norm）也称诱导2范数（ induced 2-norm），等于最大奇异值（也就是奇异值向量的 $\ell_{\infty}$ 范数），即
+\begin{equation}\label{eq:Operator}
+\lVert X \rVert\ := \sigma_1(X)
+\end{equation}</p>
+
+<h3 id="section-2">3. 核范数</h3>
+<p>矩阵的核范数（nuclear norm）等于矩阵奇异值的和，即
+\begin{equation}\label{eq:Nuclear}
+\lVert X \rVert _* := \sum_{i=1}^r \sigma_i(X)
+\end{equation}
+核范数通常被称为其他一些名字，如Schatten的 1-norm，Ky Fan的 r-norm，或迹范数（trace class norm）。由于奇异值均非负，核范数等于奇异值向量的 <script type="math/tex">\ell_1</script> 范数。</p>
+
+<p>对于任意秩不超过 <script type="math/tex">r</script> 的矩阵 <script type="math/tex">X</script>，以上三种范数满足以下不等式条件</p>
+
+<p>\begin{equation}\label{eq:norm-inequ}
+\lVert X \rVert  \le \lVert X \rVert _F \le \lVert X \rVert _* \le \sqrt{r} \lVert X \rVert_F \le r\lVert X \rVert
+\end{equation}</p>
+
+<h2 id="section-3">2. 对偶矩阵</h2>
+<p>对于内积空间上的任意范数<script type="math/tex">\lVert  \cdot \rVert</script>，存在一个对偶范数（dual norm） <script type="math/tex">\lVert  \cdot \rVert _d</script>，其定义如下：</p>
+
+<p>\begin{equation}\label{eq:dual-norm}
+\lVert X \rVert _d := \max _{Y} { \langle X,Y \rangle : \lVert Y \rVert \le q }
+\end{equation}
+特别地，对偶范数的对偶范数为原范数。</p>
+
+<p>对于 $\mathbb{R}^n$ 上的向量，<script type="math/tex">\ell_p</script> 范数 $1 &lt; p &lt; \infty$ 的对偶范数为 <script type="math/tex">\ell_q</script> 范数，$p,q$ 满足 <script type="math/tex"> \frac{1}{p} + \frac{1}{q} = 1</script>。类似地，<script type="math/tex">\ell_\infty</script> 的对偶范数为 <script type="math/tex">\ell_1</script>。同样，我们可以推广到我们定义的矩阵范数。例如，Frobenius范数的对偶范数还是Frobenius范数，这可以简单的微积分（或Cauchy-Schwarz）来验证，因为</p>
+
+<p>\begin{equation}\label{eq:Frobenius-verify}
+\max _{Y} { Tr(X’Y) : Tr(Y’Y) \le 1}
+\end{equation}
+就等于 <script type="math/tex">\lVert  X\rVert _F</script>，且当 <script type="math/tex">Y = X / \lVert X \rVert _F</script>时取得最大值。类似地，算子范数的对偶范数是核范数（后面会具体说明）。</p>
+
+<h2 id="section-4">3. 秩和势函数的凸包络</h2>
+<p><strong>凸包络（Convex envelope）</strong>的定义：给定一个凸集 <script type="math/tex">\mathcal{C}</script>，一个函数（可以为非凸的）<script type="math/tex">f : \mathcal{C} \rightarrow \mathbb{R} </script> 的凸包络为使得对所有 <script type="math/tex">x \in \mathcal{C}</script> 均有 <script type="math/tex">g(x) \le f(x)</script> 的最大凸函数 <script type="math/tex">g</script> 。凸包络的定义表明，在所有的凸函数中，$g$ 是对 $f$ 最佳的逐点近似。特别的，如果最优的 $g$ 可以方便的描述出来，函数 $f$ 近似的最小值可以高效地求得。</p>
+
+<p>由链式不等式 \eqref{eq:norm-inequ}可以得到 对所有 $X$ 有 <script type="math/tex">rank(X) \ge \lVert X \rVert_* / \lVert X \rVert</script>。对所有 <script type="math/tex">\lVert X \rVert \le 1</script>，均有 <script type="math/tex">rank(X) \ge \lVert X \rVert_*</script>，因此在算子范数定义的单位球内，核范数是秩函数的较小的凸边界。事实上核范数也是其最紧致的凸边界，即：在集合 <script type="math/tex">\{ X \in \mathbb{R}^{m \times n} : \lVert X \rVert \le 1 \}</script> 上，核范数 <script type="math/tex">\lVert X \rVert _*</script> 是秩函数 $rank(X)$ 的凸包络。</p>
+
+<script type="math/tex; mode=display">
+card(x) \ge \|x\|_1/\|x\|_{\infty}
+</script>
+
+<h2 id="section-5">4. 秩的可加性</h2>
+<p><strong>次可加性（subadditivity）</strong>：如果从一个线性空间 $\mathcal{S}$ 映射到 $\mathbb{R}$ 的函数 $f$ 满足 $f(x+y) \le f(x) + f(y)$。</p>
+
+<p><strong>可加性（additivity）</strong>：如果从一个线性空间 $\mathcal{S}$ 映射到 $\mathbb{R}$ 的函数 $f$ 满足 $f(x+y) = f(x) + f(y)$。</p>
+
+<p>对于向量来说，势函数和 $\ell_1$ 范数均满足次可加性。</p>
+
+<ol class="bibliography"><li><span id="recht2010guaranteed">Recht, B., Fazel, M., &#38; Parrilo, P. A. (2010). Guaranteed minimum-rank solutions of linear matrix equations via nuclear norm minimization. <i>SIAM review</i>, <i>52</i>(3), 471–501.</span></li></ol>
+
+	
+
+	<hr />
+	<div class="page fix">
+		
+		<span class="prev"><a href="/blog/2013/10/22/Compressive-Sensing">←《 压缩感知初探》</a></span>
+		
+		
+		<span class="next"><a href="/blog/2014/03/28/windows-mpich2">《 在windows下使用MPICH2进行集群并行计算》→</a></span>
+		
+	</div>
+	<hr />
+  <div class="comment">
+					
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'dannpu'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</article>
+
+<script type="text/javascript"  src="/media/js/jquery-min.js"></script>
+<script type="text/javascript" src="/media/js/Fullscreen.js"></script>
+<script type="text/javascript">
+$(function() {
+	var global = window;
+
+	// =============== 全屏显示 ==================
+	(function() {
+		var icon = $( 'a.icon-fullscreen' ),
+			fs, fsCallback;
+		
+		fsCallback = function(isFullscreen) {
+				if (isFullscreen) {
+					icon.addClass('expand').attr('title', 'ESC 退出全屏');
+				}
+				else {
+					icon.removeClass('expand').attr('title', '点击全屏显示');
+				}
+			};
+			
+		fs = new Fullscreen({
+				element: $('#post'),
+				noSafari: true,
+				callback: fsCallback
+			});
+
+		if (fs.fullscreenEnabled) {
+			icon.on('click', function() {
+				fs.toggleFullscreen();
+				return false;
+			});
+		}
+		else {
+			icon.hide();
+		}
+	})();
+});
+</script>
+		</section><!--/content end-->
+		<footer id="footer">
+			<p class="l">
+				&copy;2013 <a href="/">土肥龙</a> 
+				版权所有
+				<span class="c9">|</span>
+				欢迎转载，请注明出处并保留原文链接
+			</p>
+			<p class="r">Powered by <a href="https://github.com/mojombo/jekyll" target="_blank">Jekyll</a></p>
+			<p class="tac">
+				『上善若水，水善利万物而不争』
+			</p>
+		</footer><!--/footer end-->
+    </div>
+        
+    <div id="aside-right">
+    </div>
+		
+    <script>
+	(function(d, s) {
+		var js, fjs = d.getElementsByTagName(s)[0], load = function(url, id) {
+		if (d.getElementById(id)) {return;}
+		js = d.createElement(s); js.src = url; js.id = id;
+		fjs.parentNode.insertBefore(js, fjs);
+		};
+	load('//platform.twitter.com/widgets.js', 'tweetjs');
+	// load('https://apis.google.com/js/plusone.js', 'gplus1js'); // Checkout http://j.mp/ApDgMr for usage html for this is <div class="g-plusone" data-size="medium"></div>
+	// load('//connect.facebook.net/en_US/all.js#xfbml=1', 'fbjssdk'); // Checkout http://j.mp/wZw2xR for using open graph protorol html for this is <div class="fb-like" data-href="/blog/2013/12/20/Minimum-Rank-Solutions" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="verdana"></div>
+	}(document, 'script'));
+</script>
+<script>
+/*! A fix for the iOS orientationchange zoom bug.Script by @scottjehl, rebound by @wilto. MIT License.*/
+(function(j){var i=j.document;if(!i.querySelectorAll){return}var l=i.querySelectorAll("meta[name=viewport]")[0],a=l&&l.getAttribute("content"),h=a+", maximum-scale=1.0",d=a+", maximum-scale=10.0",g=true,c= j.orientation,k=0;if(!l){return}function f(){l.setAttribute("content",d);g=true}function b(){l.setAttribute("content",h);g=false}function e(m){c=Math.abs(j.orientation);k=Math.abs(m.gamma);if(k>8&&c===0){if(g){b()}}else{if(!g){f()}}}j.addEventListener("orientationchange",f,false);j.addEventListener("deviceorientation",e,false)})(this);
+</script>	
+
+	</body>
+</html>

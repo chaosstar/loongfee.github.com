@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="author" content="土肥龙">
+		<meta name="title" content="用Notepad++替换系统记事本">
+		<meta name="description" content="主要是借助AutoHotkey和映像劫持结束来实现用Notepad++替换系统记事本的功能，方法具有普适性，理论上说可以支持用任意软件替换系统相应的默认程序。">
+		<meta name="keywords" content="Notepad++notepad记事本AutoHotkey映像劫持Image File Execution Optionsvimnotepad2">
+		<title>用Notepad++替换系统记事本</title>
+        <link rel="stylesheet" href="/media/css/main.css" />
+        <link rel="stylesheet" href="/media/css/favorite.css" />
+		<link rel="stylesheet" href="/media/css/pygments_native.css" />
+		<link rel="stylesheet" href="/media/css/lightbox.css" />
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Handlee">
+		<script type="text/javascript" src="/media/js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="/media/js/lightbox-2.6.min.js"></script>
+		<!---<link rel="stylesheet" href="/css/styles/monokai.css">
+        <script src="/js/highlight.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>-->
+		<!-- MathJax for LaTeX -->
+        <script type="text/x-mathjax-config"> 
+        MathJax.Hub.Config({
+            TeX: { equationNumbers: { autoNumber: "AMS" } }
+        }); 
+        </script>
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({ TeX: { extensions: ["autobold.js"] }});
+		</script>
+		<script type="text/javascript"
+			src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+		</script>
+
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ['$$$','$$$'], ["\\(","\\)"] ],
+                processEscapes: true
+            }
+        });
+        </script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+		
+    
+	</head>
+	<body>
+    <div id="aside-left">
+        <nav class="navigation">
+            <h3>导航</h3>
+            <li><a href="/">Home</a></li>
+            <li><a href="/archive.html">List</a></li>
+            <li><a href="/favorite.html">Favorite</a></li>
+            <li><a href="/tags.html">Tags</a></li>
+            <li><a href="/atom.xml">RSS</a></li>
+        </nav>
+        <nav class="navigation">
+            <h3>分类</h3>
+            
+            <li><a href="/category.html#开源">开源 (3)</a></li>
+            
+            <li><a href="/category.html#jekyll">jekyll (2)</a></li>
+            
+            <li><a href="/category.html#软件">软件 (2)</a></li>
+            
+            <li><a href="/category.html#computer vision">computer vision (3)</a></li>
+            
+            <li><a href="/category.html#parallel">parallel (1)</a></li>
+            
+        </nav>
+        <nav class="navigation">
+            <h3>链接</h3>
+            <li><a href="http://blog.sina.com.cn/loongfee" target="_blank">Sina</a></li>
+            <li><a href="http://www.cnblogs.com/loongfee/" target="_blank">cnBlog</a></li>
+        </nav>
+    </div>
+    <div id="main" role="main">
+		<header id="header">
+			<div class="header-info fix">
+				<h1><a href="/">淡朴若水</a></h1>
+                <h3>『遥感, 软件, 数学, IT杂碎』</h3>
+			</div>
+		</header><!--/header end-->
+
+		<section id="content" class="fix">
+			<script type="text/javascript" src="/media/js/navigation.js"></script>
+<article id="post">
+	<a href="#" class="icon-fullscreen r" title="点击全屏显示"></a>
+    <header>
+        <div class="unit-head">
+            <div class="unit-inner unit-head-inner">
+                <h1 id="page-title">用Notepad++替换系统记事本</h1>
+            </div><!-- unit-inner -->
+        </div><!-- unit-head -->
+    </header>
+	<div class="c9">
+		分类：
+			
+			<a href="/category.html#软件">软件</a>
+			
+			
+		&emsp;&emsp;&emsp;&emsp;
+		<time date="2013-08-06 00:00:00 +0800">2013-08-06</time>
+	</div>
+	<ul class="list-tag list-linear">
+        <li class="c9">标签：</li>
+        
+        
+
+
+  
+     
+    	<li><a href="/tags.html#Notepad++-ref">Notepad++ <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#记事本-ref">记事本 <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#AutoHotkey-ref">AutoHotkey <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#映像劫持-ref">映像劫持 <span>1</span></a></li>
+    
+  
+
+
+
+    </ul>
+
+	
+<p>本文主要介绍如何借助AutoHotkey和映像劫持结束来实现用Notepad++替换系统记事本的功能，方法具有普适性，理论上说可以支持用任意软件替换系统相应的默认程序。</p>
+
+<h2 id="section">1. 什么映像劫持技术</h2>
+<p>简单说来，<a href="http://baike.baidu.com/view/1296399.htm">映像劫持技术(Image File Execution Options)</a>就是将某个<code>程序A</code>直接映射到另一个<code>程序B</code>上去，然后在试图执行<code>程序A</code>时自动执行了<code>程序B</code>。而这一切只需要在注册表中添加一条语句即可实现，不需要修改系统中的文件和其他配置。想要恢复原有程序时，只需从注册表中删除这条语句就行了。整个过程非常绿色环保，不会对系统造成其他影响。<br />
+以使用Notepad2替换记事本<sup id="fnref:portablesoft"><a href="#fn:portablesoft" class="footnote">1</a></sup>为例，具体过程主要包括：</p>
+
+<ul>
+  <li>创建如下注册表项：<code>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe</code>，如果无法修改，需要先右键取得权限  </li>
+  <li>在<code>notepad.exe</code>注册表项中，创建名为<code>Debugger</code>的字符串值(<code>REG_SZ</code>)  </li>
+  <li>修改字符串值<code>Debugger</code>的数据为<code>Notepad2.exe</code>的完整路径，最后以 <code>/z</code> 参数结尾。
+通过镜像劫持技术将记事本替换为Notepad2的方案十分非常完美了，<code>Notepad2</code>官方文档<sup id="fnref:notepad2"><a href="#fn:notepad2" class="footnote">2</a></sup>中就给出了实现方法，其中的参数 <code>/z</code> 应该就是特地为替换记事本而设计的。  </li>
+</ul>
+
+<p>平心而论，<code>Notepad2</code>已经是一款非常优秀的记事本替代品了，启动速度快，支持自定制，功能也非常丰富，尤其是<a href="http://www.portablesoft.org">精品绿色便携软件</a>提供的修改版<a href="http://www.portablesoft.org/notepad2-replacement/">Notepad2-mod</a>，功能更强大了，一般使用已经完全足够了。但是与同样开源免费的<a href="http://notepad-plus-plus.org"><code>Notepad++</code></a>相比，在对文本文件(*.txt)编码字符集的自动识别能力上差了不少，有的不能自动识别，显示乱字符。另外一个硬伤就是不支持多标签，在打开多个文件时窗口是很凌乱的。</p>
+
+<h2 id="notepad">2. 尝试用<code>Notepad++</code>替换系统记事本</h2>
+<p>首先，笔者尝试了将在<code>Notepad2</code>中得到完美应用的<code>映像劫持技术</code>直接搬到<code>Notepad++</code>中来，结果是失败的：  </p>
+
+<blockquote>
+  <p>直接使用<code>镜像劫持</code>方案修改后，运行记事本时会自动打开<code>notepad.exe</code>文件。原因是<code>notepad++.exe</code>不支持用参数 <code>/z</code> 跳过后续第一个参数。</p>
+</blockquote>
+
+<h2 id="autohotkey-">3. 万能工具 <code>AutoHotkey</code> 出马</h2>
+<p>虽然<code>Notepad++</code>本身没有提供<code>跳过后续第一个参数</code>的功能，但是并不是没有办法实现的。因为 <code>AutoHotkey</code> 的存在，几乎一切都是可以自己定制的，更何况是这么一个小小的参数。下面一段代码就是通过 <code>AutoHotkey</code>来跳过 <code>notepad.exe</code> 参数，解决自动打开<code>notepad.exe</code>的问题。</p>
+
+<div class="highlight"><pre><code class="ahk"><span class="c-Singleline">; cnpp.ahk</span>
+<span class="n">cpath</span> <span class="o">=</span>
+<span class="nb">Loop</span><span class="p">,</span> <span class="o">%</span><span class="mi">0</span><span class="o">%</span>
+<span class="p">{</span>
+    <span class="n">param</span> <span class="o">:=</span> <span class="nv">%A_Index%</span>
+    <span class="nb">If </span><span class="n">param</span> <span class="ow">not</span> <span class="n">contains</span> <span class="n">notepad</span><span class="o">.</span><span class="n">exe</span>
+    <span class="n">cpath</span> <span class="o">=</span> <span class="nv">%cpath%</span> <span class="nv">%param%</span>
+<span class="p">}</span>
+<span class="nb">Run</span> <span class="n">notepad</span><span class="o">++.</span><span class="n">exe</span> <span class="s">&quot;%cpath%&quot;</span>
+</code></pre></div>
+
+<p>编译这段 <code>AHK</code> 代码，生成一个名为<code>cnpp</code>的可执行程序。 然后通过下面的 <code>Batch</code> 命令直接添加注册表语句，实现系统记事本的映像劫持。</p>
+
+<div class="highlight"><pre><code class="bat"><span class="c">:: 替换记事本.bat</span>
+<span class="p">@</span><span class="k">echo</span> <span class="k">off</span>
+<span class="k">cd</span> <span class="n">/d</span> <span class="s2">&quot;%~dp0&quot;</span>
+reg add <span class="s2">&quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe&quot;</span> <span class="n">/v</span> <span class="s2">&quot;Debugger&quot;</span> <span class="n">/d</span> <span class="s2">&quot;%~dp0cnpp.exe&quot;</span>
+<span class="k">cls</span>
+<span class="k">echo</span> cnpp已设为默认编辑器。
+<span class="k">pause</span>
+</code></pre></div>
+
+<p>需要回复系统记事本时，直接运行下面的 <code>Batch</code> 代码就行了。</p>
+
+<div class="highlight"><pre><code class="bat"><span class="c">:: 还原记事本.bat</span>
+<span class="p">@</span><span class="k">echo</span> <span class="k">off</span>
+<span class="k">cd</span> <span class="n">/d</span> <span class="s2">&quot;%~dp0&quot;</span>
+reg delete <span class="s2">&quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe&quot;</span> <span class="n">/f</span>
+<span class="k">cls</span>
+<span class="k">echo</span> Notepad已还原为默认编辑器
+<span class="k">pause</span>
+</code></pre></div>
+
+<h2 id="autohotkey--1">4. 纯 <code>AutoHotkey</code> 实现</h2>
+<p>其实到上一节为止，设置<code>Notepad++</code>替换系统记事本的功能已经实现了，这一节只是将这个过程做的更方便更友好。</p>
+
+<div class="highlight"><pre><code class="ahk"><span class="c-Singleline">; cnpp安装.卸载.ahk</span>
+<span class="nb">RegRead</span><span class="p">,</span> <span class="n">Hijack</span><span class="p">,</span> <span class="n">HKLM</span><span class="p">,</span> <span class="n">SOFTWARE</span>\<span class="n">Microsoft</span>\<span class="n">Windows</span> <span class="n">NT</span>\<span class="n">CurrentVersion</span>\<span class="n">Image</span> <span class="n">File</span> <span class="n">Execution</span> <span class="n">Options</span>\<span class="n">notepad</span><span class="o">.</span><span class="n">exe</span><span class="p">,</span><span class="n">debugger</span><span class="c-Singleline"></span>
+<span class="c-Singleline">;MsgBox %hijack%</span>
+<span class="n">If</span><span class="p">(</span><span class="n">Hijack</span><span class="o">!=</span><span class="s">&quot;&quot;</span><span class="p">){</span>
+	<span class="nb">RegDelete</span> <span class="n">HKLM</span><span class="p">,</span> <span class="n">SOFTWARE</span>\<span class="n">Microsoft</span>\<span class="n">Windows</span> <span class="n">NT</span>\<span class="n">CurrentVersion</span>\<span class="n">Image</span> <span class="n">File</span> <span class="n">Execution</span> <span class="n">Options</span>\<span class="n">notepad</span><span class="o">.</span><span class="n">exe</span><span class="p">,</span><span class="n">debugger</span>
+	<span class="nb">TrayTip</span><span class="p">,,</span><span class="n">Notepad</span><span class="err">为默认编辑器</span><span class="p">,</span><span class="mi">2000</span>
+	<span class="nb">Sleep</span> <span class="p">,</span><span class="mi">1500</span>
+	<span class="p">}</span>
+<span class="nb">Else</span><span class="p">{</span>
+	<span class="nb">RegWrite</span><span class="p">,</span> <span class="n">REG_SZ</span><span class="p">,</span> <span class="n">HKEY_LOCAL_MACHINE</span><span class="p">,</span> <span class="n">SOFTWARE</span>\<span class="n">Microsoft</span>\<span class="n">Windows</span> <span class="n">NT</span>\<span class="n">CurrentVersion</span>\<span class="n">Image</span> <span class="n">File</span> <span class="n">Execution</span> <span class="n">Options</span>\<span class="n">notepad</span><span class="o">.</span><span class="n">exe</span> <span class="p">,</span> <span class="n">debugger</span><span class="p">,</span> <span class="n">ccaiai</span>
+	<span class="nb">RegRead</span><span class="p">,</span> <span class="n">Hijack</span><span class="p">,</span> <span class="n">HKLM</span><span class="p">,</span> <span class="n">SOFTWARE</span>\<span class="n">Microsoft</span>\<span class="n">Windows</span> <span class="n">NT</span>\<span class="n">CurrentVersion</span>\<span class="n">Image</span> <span class="n">File</span> <span class="n">Execution</span> <span class="n">Options</span>\<span class="n">notepad</span><span class="o">.</span><span class="n">exe</span><span class="p">,</span><span class="n">debugger</span>
+	<span class="n">If</span><span class="p">(</span><span class="n">Hijack</span><span class="o">!=</span><span class="s">&quot;ccaiai&quot;</span><span class="p">){</span>
+	<span class="nb">MsgBox</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="err">请先关闭杀毒软件后再重试</span>
+	<span class="nb">ExitApp</span>
+	<span class="p">}</span>
+	<span class="n">HijackPath</span><span class="o">=</span><span class="nv">%A_WorkingDir%</span>\<span class="n">cnpp</span><span class="o">.</span><span class="n">exe</span>
+	<span class="nb">RegWrite</span><span class="p">,</span> <span class="n">REG_SZ</span><span class="p">,</span> <span class="n">HKEY_LOCAL_MACHINE</span><span class="p">,</span> <span class="n">SOFTWARE</span>\<span class="n">Microsoft</span>\<span class="n">Windows</span> <span class="n">NT</span>\<span class="n">CurrentVersion</span>\<span class="n">Image</span> <span class="n">File</span> <span class="n">Execution</span> <span class="n">Options</span>\<span class="n">notepad</span><span class="o">.</span><span class="n">exe</span> <span class="p">,</span> <span class="n">debugger</span><span class="p">,</span> <span class="nv">%HijackPath%</span>
+	<span class="nb">TrayTip</span><span class="p">,,</span><span class="n">cnpp</span><span class="err">为默认编辑器</span><span class="p">,</span><span class="mi">2000</span>
+	<span class="nb">Sleep</span> <span class="p">,</span><span class="mi">1500</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>编译完 <code>AutoHotkey</code> 代码得到的 <code>exe</code> 程序放到 <code>notepad++.exe</code> 同目录下，执行  <code>cnpp安装.卸载.exe</code> 程序即可替换或还原系统记事本。<br />
+<em><code>AutoHotkey</code> 代码参考了 <code>ccaiai</code> 设置VIM为默认编辑器的代码。</em><br />
+<em>P.S. 再次体会到 <code>AutoHotkey</code> 的强大。</em></p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:portablesoft">
+      <p>通过映像劫持实现Notepad2替换记事本: <a href="http://www.portablesoft.org/notepad2-replacement/">http://www.portablesoft.org/notepad2-replacement/</a> <a href="#fnref:portablesoft" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:notepad2">
+      <p>Notepad2 ― Replacing Windows Notepad: <a href="http://www.flos-freeware.ch/doc/notepad2-Replacement.html">http://www.flos-freeware.ch/doc/notepad2-Replacement.html</a> <a href="#fnref:notepad2" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+	
+
+	<hr />
+	<div class="page fix">
+		
+		<span class="prev"><a href="/blog/2013/08/05/feedly">←《Feedly 快捷键》</a></span>
+		
+		
+		<span class="next"><a href="/blog/2013/08/12/a-contrario-starting">《 A Contrario：一种基于概率统计的无参数决策模型》→</a></span>
+		
+	</div>
+	<hr />
+  <div class="comment">
+					
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'dannpu'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</article>
+
+<script type="text/javascript"  src="/media/js/jquery-min.js"></script>
+<script type="text/javascript" src="/media/js/Fullscreen.js"></script>
+<script type="text/javascript">
+$(function() {
+	var global = window;
+
+	// =============== 全屏显示 ==================
+	(function() {
+		var icon = $( 'a.icon-fullscreen' ),
+			fs, fsCallback;
+		
+		fsCallback = function(isFullscreen) {
+				if (isFullscreen) {
+					icon.addClass('expand').attr('title', 'ESC 退出全屏');
+				}
+				else {
+					icon.removeClass('expand').attr('title', '点击全屏显示');
+				}
+			};
+			
+		fs = new Fullscreen({
+				element: $('#post'),
+				noSafari: true,
+				callback: fsCallback
+			});
+
+		if (fs.fullscreenEnabled) {
+			icon.on('click', function() {
+				fs.toggleFullscreen();
+				return false;
+			});
+		}
+		else {
+			icon.hide();
+		}
+	})();
+});
+</script>
+		</section><!--/content end-->
+		<footer id="footer">
+			<p class="l">
+				&copy;2013 <a href="/">土肥龙</a> 
+				版权所有
+				<span class="c9">|</span>
+				欢迎转载，请注明出处并保留原文链接
+			</p>
+			<p class="r">Powered by <a href="https://github.com/mojombo/jekyll" target="_blank">Jekyll</a></p>
+			<p class="tac">
+				『上善若水，水善利万物而不争』
+			</p>
+		</footer><!--/footer end-->
+    </div>
+        
+    <div id="aside-right">
+    </div>
+		
+    <script>
+	(function(d, s) {
+		var js, fjs = d.getElementsByTagName(s)[0], load = function(url, id) {
+		if (d.getElementById(id)) {return;}
+		js = d.createElement(s); js.src = url; js.id = id;
+		fjs.parentNode.insertBefore(js, fjs);
+		};
+	load('//platform.twitter.com/widgets.js', 'tweetjs');
+	// load('https://apis.google.com/js/plusone.js', 'gplus1js'); // Checkout http://j.mp/ApDgMr for usage html for this is <div class="g-plusone" data-size="medium"></div>
+	// load('//connect.facebook.net/en_US/all.js#xfbml=1', 'fbjssdk'); // Checkout http://j.mp/wZw2xR for using open graph protorol html for this is <div class="fb-like" data-href="/blog/2013/08/06/notepad-replace-notepad" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="verdana"></div>
+	}(document, 'script'));
+</script>
+<script>
+/*! A fix for the iOS orientationchange zoom bug.Script by @scottjehl, rebound by @wilto. MIT License.*/
+(function(j){var i=j.document;if(!i.querySelectorAll){return}var l=i.querySelectorAll("meta[name=viewport]")[0],a=l&&l.getAttribute("content"),h=a+", maximum-scale=1.0",d=a+", maximum-scale=10.0",g=true,c= j.orientation,k=0;if(!l){return}function f(){l.setAttribute("content",d);g=true}function b(){l.setAttribute("content",h);g=false}function e(m){c=Math.abs(j.orientation);k=Math.abs(m.gamma);if(k>8&&c===0){if(g){b()}}else{if(!g){f()}}}j.addEventListener("orientationchange",f,false);j.addEventListener("deviceorientation",e,false)})(this);
+</script>	
+
+	</body>
+</html>

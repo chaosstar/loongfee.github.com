@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="author" content="土肥龙">
+		<meta name="title" content=" 在windows下使用MPICH2进行集群并行计算">
+		<meta name="description" content="在windows下使用MPICH2进行集群并行计算">
+		
+		<title> 在windows下使用MPICH2进行集群并行计算</title>
+        <link rel="stylesheet" href="/media/css/main.css" />
+        <link rel="stylesheet" href="/media/css/favorite.css" />
+		<link rel="stylesheet" href="/media/css/pygments_native.css" />
+		<link rel="stylesheet" href="/media/css/lightbox.css" />
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Handlee">
+		<script type="text/javascript" src="/media/js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="/media/js/lightbox-2.6.min.js"></script>
+		<!---<link rel="stylesheet" href="/css/styles/monokai.css">
+        <script src="/js/highlight.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>-->
+		<!-- MathJax for LaTeX -->
+        <script type="text/x-mathjax-config"> 
+        MathJax.Hub.Config({
+            TeX: { equationNumbers: { autoNumber: "AMS" } }
+        }); 
+        </script>
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({ TeX: { extensions: ["autobold.js"] }});
+		</script>
+		<script type="text/javascript"
+			src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+		</script>
+
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ['$$$','$$$'], ["\\(","\\)"] ],
+                processEscapes: true
+            }
+        });
+        </script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+		
+    
+	</head>
+	<body>
+    <div id="aside-left">
+        <nav class="navigation">
+            <h3>导航</h3>
+            <li><a href="/">Home</a></li>
+            <li><a href="/archive.html">List</a></li>
+            <li><a href="/favorite.html">Favorite</a></li>
+            <li><a href="/tags.html">Tags</a></li>
+            <li><a href="/atom.xml">RSS</a></li>
+        </nav>
+        <nav class="navigation">
+            <h3>分类</h3>
+            
+            <li><a href="/category.html#开源">开源 (3)</a></li>
+            
+            <li><a href="/category.html#jekyll">jekyll (2)</a></li>
+            
+            <li><a href="/category.html#软件">软件 (2)</a></li>
+            
+            <li><a href="/category.html#computer vision">computer vision (3)</a></li>
+            
+            <li><a href="/category.html#parallel">parallel (1)</a></li>
+            
+        </nav>
+        <nav class="navigation">
+            <h3>链接</h3>
+            <li><a href="http://blog.sina.com.cn/loongfee" target="_blank">Sina</a></li>
+            <li><a href="http://www.cnblogs.com/loongfee/" target="_blank">cnBlog</a></li>
+        </nav>
+    </div>
+    <div id="main" role="main">
+		<header id="header">
+			<div class="header-info fix">
+				<h1><a href="/">淡朴若水</a></h1>
+                <h3>『遥感, 软件, 数学, IT杂碎』</h3>
+			</div>
+		</header><!--/header end-->
+
+		<section id="content" class="fix">
+			<script type="text/javascript" src="/media/js/navigation.js"></script>
+<article id="post">
+	<a href="#" class="icon-fullscreen r" title="点击全屏显示"></a>
+    <header>
+        <div class="unit-head">
+            <div class="unit-inner unit-head-inner">
+                <h1 id="page-title"> 在windows下使用MPICH2进行集群并行计算</h1>
+            </div><!-- unit-inner -->
+        </div><!-- unit-head -->
+    </header>
+	<div class="c9">
+		分类：
+			
+			<a href="/category.html#parallel">parallel</a>
+			
+			
+		&emsp;&emsp;&emsp;&emsp;
+		<time date="2014-03-28 00:00:00 +0800">2014-03-28</time>
+	</div>
+	<ul class="list-tag list-linear">
+        <li class="c9">标签：</li>
+        
+        
+
+
+  
+     
+    	<li><a href="/tags.html#集群-ref">集群 <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#并行-ref">并行 <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#MPICH2-ref">MPICH2 <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#MPI-ref">MPI <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#windows-ref">windows <span>1</span></a></li>
+    
+  
+
+
+
+    </ul>
+
+	
+<h2 id="section">1. 安装</h2>
+<p>### (1) MPI版本
+MPI（Message Passing Interface）是一种消息传递编程模型，用于实现进程间的通信。MPI从它的诞生开始就有着深深的自然科学家的烙印，MPI标准的制定就是为了自然科学学者实现高速计算。目前MPI以有多种实现，如<a href="http://www.mpich.org">MPICH</a>、<a href="http://www.open-mpi.org">Open MPI</a>、<a href="http://msdn.microsoft.com/en-us/library/bb524831(v=vs.85).aspx">Microsoft MPI</a>、<a href="http://www.lam-mpi.org">LAM/MPI</a>、<a href="http://public.lanl.gov/lampi/">LA-MPI</a>等，其中MPICH是windows下比较易用的，本文就是介绍如何在windows下安装和配置<a href="http://www.mpich.org">MPICH</a>。</p>
+
+<p>MPICH是MPI标准的一种最重要的实现，可以免费从网上下载。MPICH的开发与MPI规范的制订是同步进行的，因此MPICH最能反映MPI的变化和发展。MPICH的开发主要是由Argonne National Laboratory和Mississippi State University共同完成的，在这一过程中IBM也做出了自己的贡献，但是MPI规范的标准化工作是由MPI论坛完成的。MPICH是MPI最流行的非专利实现,由Argonne国家实验室和密西西比州立大学联合开发,具有更好的可移植性。目前（2014年4月）MPICH的最新版本已经更新到mpich-3.1，但是较新的版本并没有提供Windows下二进制安装文件，现阶段多流行的是MPICH2。<a href="http://www.mpich.org/static/downloads/">这里</a>可以看到MPICH的所有版本，本文使用的是支持提供Windows二进制安装文件的最新版本1.4.1p1，可以选择下载<a href="http://www.mpich.org/static/downloads/1.4.1p1/mpich2-1.4.1p1-win-ia32.msi">32位版本</a>或者<a href="http://www.mpich.org/static/downloads/1.4.1p1/mpich2-1.4.1p1-win-x86-64.msi">64位版本</a>，这个可以根据你安装的Windows是32位还是64位来选择。</p>
+
+<h3 id="mpich2">(2) 安装MPICH2</h3>
+<p>Windows版本的安装基本是傻瓜式的，需要注意的是权限问题，尤其是在vista、win7或win8下，必须以管理员身份来运行安装程序（把用户帐户控制UAC也关掉）。也可以直接使用“msiexec /i ***.msi”命令来完成管理员权限下的mpich2安装。安装过程中基本是一路next，就是在选择安装用户的时候需要选择“everyone”，因为后面进行配置的时候可能会用到不同的用户账户。</p>
+
+<p>是的，这样就算安装完了。</p>
+
+<h2 id="section-1">2. 配置运行环境</h2>
+<p>### &lt;h3 id='Environment'&gt;(1) 环境变量&lt;h3&gt;
+把MPICH2的执行程序目录添加到环境变量PATH中去。路径为“$MPICH2安装路径$\bin”，如：“C:\Program Files\MPICH2\bin”。</p>
+
+<h3 id="section-2">(2) 用户账户设置</h3>
+<p>要使用MPICH2必须保证当前用户为管理员用户，并且需要设置登录密码。因此，如果你的帐户不满足以上要求就需要进行相应的修改。</p>
+
+<h3 id="section-3">(3) 注册</h3>
+<p>运行“$MPICH2安装路径$\bin\wmpiregister.exe”，输入用户名和密码进行注册。</p>
+
+<h3 id="section-4">(4) 单机测试</h3>
+<p>做完以上的配置，应该就能够在单机进行并行计算了，可以用MPICH2自带的工具和计算PI的程序测试一下。
+运行“$MPICH2安装路径$\bin\wmpiexec.exe”：</p>
+
+<ol>
+  <li>
+    <p>在Application中选择“$MPICH2安装路径$\examples\cpi.exe”</p>
+  </li>
+  <li>
+    <p>然后调节“Number of processes”以选择使用的进程数</p>
+  </li>
+  <li>
+    <p>勾选“run in an separate window”</p>
+  </li>
+  <li>
+    <p>点击“Execute”</p>
+  </li>
+</ol>
+
+<p>接下来会提示输入一个区间，这里输入5000000+回车，然后可以看到计算结果和计算时间。输入0+回车可以退出程序。</p>
+
+<p>可以选择不同的进程数进行测试，看看计算时间有什么变化。通常来说当进程数小于CUP核的个数时，计算时间应该随着进程数线型递减。</p>
+
+<h3 id="section-5">(5) 可能的问题</h3>
+<ol>
+  <li>测试时点击“Execute”，命令行窗口一闪即关</li>
+</ol>
+
+<blockquote>
+  <blockquote>
+    <p>可能是环境变量没有设置好，重新<a href="#Environment">设置环境变量</a>，必要时需要注销或重启。</p>
+  </blockquote>
+</blockquote>
+
+	
+
+	<hr />
+	<div class="page fix">
+		
+		<span class="prev"><a href="/blog/2013/12/20/Minimum-Rank-Solutions">←《 Minimum-Rank Solutions via Nuclear Norm Minimization》</a></span>
+		
+		
+	</div>
+	<hr />
+  <div class="comment">
+					
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'dannpu'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</article>
+
+<script type="text/javascript"  src="/media/js/jquery-min.js"></script>
+<script type="text/javascript" src="/media/js/Fullscreen.js"></script>
+<script type="text/javascript">
+$(function() {
+	var global = window;
+
+	// =============== 全屏显示 ==================
+	(function() {
+		var icon = $( 'a.icon-fullscreen' ),
+			fs, fsCallback;
+		
+		fsCallback = function(isFullscreen) {
+				if (isFullscreen) {
+					icon.addClass('expand').attr('title', 'ESC 退出全屏');
+				}
+				else {
+					icon.removeClass('expand').attr('title', '点击全屏显示');
+				}
+			};
+			
+		fs = new Fullscreen({
+				element: $('#post'),
+				noSafari: true,
+				callback: fsCallback
+			});
+
+		if (fs.fullscreenEnabled) {
+			icon.on('click', function() {
+				fs.toggleFullscreen();
+				return false;
+			});
+		}
+		else {
+			icon.hide();
+		}
+	})();
+});
+</script>
+		</section><!--/content end-->
+		<footer id="footer">
+			<p class="l">
+				&copy;2013 <a href="/">土肥龙</a> 
+				版权所有
+				<span class="c9">|</span>
+				欢迎转载，请注明出处并保留原文链接
+			</p>
+			<p class="r">Powered by <a href="https://github.com/mojombo/jekyll" target="_blank">Jekyll</a></p>
+			<p class="tac">
+				『上善若水，水善利万物而不争』
+			</p>
+		</footer><!--/footer end-->
+    </div>
+        
+    <div id="aside-right">
+    </div>
+		
+    <script>
+	(function(d, s) {
+		var js, fjs = d.getElementsByTagName(s)[0], load = function(url, id) {
+		if (d.getElementById(id)) {return;}
+		js = d.createElement(s); js.src = url; js.id = id;
+		fjs.parentNode.insertBefore(js, fjs);
+		};
+	load('//platform.twitter.com/widgets.js', 'tweetjs');
+	// load('https://apis.google.com/js/plusone.js', 'gplus1js'); // Checkout http://j.mp/ApDgMr for usage html for this is <div class="g-plusone" data-size="medium"></div>
+	// load('//connect.facebook.net/en_US/all.js#xfbml=1', 'fbjssdk'); // Checkout http://j.mp/wZw2xR for using open graph protorol html for this is <div class="fb-like" data-href="/blog/2014/03/28/windows-mpich2" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="verdana"></div>
+	}(document, 'script'));
+</script>
+<script>
+/*! A fix for the iOS orientationchange zoom bug.Script by @scottjehl, rebound by @wilto. MIT License.*/
+(function(j){var i=j.document;if(!i.querySelectorAll){return}var l=i.querySelectorAll("meta[name=viewport]")[0],a=l&&l.getAttribute("content"),h=a+", maximum-scale=1.0",d=a+", maximum-scale=10.0",g=true,c= j.orientation,k=0;if(!l){return}function f(){l.setAttribute("content",d);g=true}function b(){l.setAttribute("content",h);g=false}function e(m){c=Math.abs(j.orientation);k=Math.abs(m.gamma);if(k>8&&c===0){if(g){b()}}else{if(!g){f()}}}j.addEventListener("orientationchange",f,false);j.addEventListener("deviceorientation",e,false)})(this);
+</script>	
+
+	</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="author" content="土肥龙">
+		<meta name="title" content=" A Contrario：一种基于概率统计的无参数决策模型">
+		<meta name="description" content="一种基于概率统计的无参数决策模型">
+		
+		<title> A Contrario：一种基于概率统计的无参数决策模型</title>
+        <link rel="stylesheet" href="/media/css/main.css" />
+        <link rel="stylesheet" href="/media/css/favorite.css" />
+		<link rel="stylesheet" href="/media/css/pygments_native.css" />
+		<link rel="stylesheet" href="/media/css/lightbox.css" />
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Handlee">
+		<script type="text/javascript" src="/media/js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="/media/js/lightbox-2.6.min.js"></script>
+		<!---<link rel="stylesheet" href="/css/styles/monokai.css">
+        <script src="/js/highlight.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>-->
+		<!-- MathJax for LaTeX -->
+        <script type="text/x-mathjax-config"> 
+        MathJax.Hub.Config({
+            TeX: { equationNumbers: { autoNumber: "AMS" } }
+        }); 
+        </script>
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({ TeX: { extensions: ["autobold.js"] }});
+		</script>
+		<script type="text/javascript"
+			src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+		</script>
+
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ['$$$','$$$'], ["\\(","\\)"] ],
+                processEscapes: true
+            }
+        });
+        </script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+		
+    
+	</head>
+	<body>
+    <div id="aside-left">
+        <nav class="navigation">
+            <h3>导航</h3>
+            <li><a href="/">Home</a></li>
+            <li><a href="/archive.html">List</a></li>
+            <li><a href="/favorite.html">Favorite</a></li>
+            <li><a href="/tags.html">Tags</a></li>
+            <li><a href="/atom.xml">RSS</a></li>
+        </nav>
+        <nav class="navigation">
+            <h3>分类</h3>
+            
+            <li><a href="/category.html#开源">开源 (3)</a></li>
+            
+            <li><a href="/category.html#jekyll">jekyll (2)</a></li>
+            
+            <li><a href="/category.html#软件">软件 (2)</a></li>
+            
+            <li><a href="/category.html#computer vision">computer vision (3)</a></li>
+            
+            <li><a href="/category.html#parallel">parallel (1)</a></li>
+            
+        </nav>
+        <nav class="navigation">
+            <h3>链接</h3>
+            <li><a href="http://blog.sina.com.cn/loongfee" target="_blank">Sina</a></li>
+            <li><a href="http://www.cnblogs.com/loongfee/" target="_blank">cnBlog</a></li>
+        </nav>
+    </div>
+    <div id="main" role="main">
+		<header id="header">
+			<div class="header-info fix">
+				<h1><a href="/">淡朴若水</a></h1>
+                <h3>『遥感, 软件, 数学, IT杂碎』</h3>
+			</div>
+		</header><!--/header end-->
+
+		<section id="content" class="fix">
+			<script type="text/javascript" src="/media/js/navigation.js"></script>
+<article id="post">
+	<a href="#" class="icon-fullscreen r" title="点击全屏显示"></a>
+    <header>
+        <div class="unit-head">
+            <div class="unit-inner unit-head-inner">
+                <h1 id="page-title"> A Contrario：一种基于概率统计的无参数决策模型</h1>
+            </div><!-- unit-inner -->
+        </div><!-- unit-head -->
+    </header>
+	<div class="c9">
+		分类：
+			
+			<a href="/category.html#computer vision">computer vision</a>
+			
+			
+		&emsp;&emsp;&emsp;&emsp;
+		<time date="2013-08-12 00:00:00 +0800">2013-08-12</time>
+	</div>
+	<ul class="list-tag list-linear">
+        <li class="c9">标签：</li>
+        
+        
+
+
+  
+     
+    	<li><a href="/tags.html#Contrario-ref">Contrario <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#Math-ref">Math <span>3</span></a></li>
+     
+    	<li><a href="/tags.html#Helmholtz-ref">Helmholtz <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#Gestalt Theory-ref">Gestalt Theory <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#Computer Vision-ref">Computer Vision <span>3</span></a></li>
+    
+  
+
+
+
+    </ul>
+
+	
+<h2 id="a-contrario">关于”a contrario”模型</h2>
+<p>虽然这个模型已经提出了十多年，应用也比较广泛了，但是笔者并没查阅到确切的中文翻译，这里姑且将其译为“悖论模型”吧。与这个模型密切相关的关键词有：<code>Gestalt</code>、<code>Helmholtz</code>、<code>NFA (Number of False Alarm)</code>、<code> ε-meaningful </code>，它们原本都是属于心理学的范畴，<a href="http://desolneux.perso.math.cnrs.fr">Agnès Desolneux</a>, <a href="http://www.math-info.univ-paris5.fr/~moisan/index.php">Lionel Moisan</a> and <a href="http://scholar.google.com/citations?user=BlEbdeEAAAAJ&amp;hl=en">Jean-Michel Morel</a>于1999年将其引入到图像分析领域<a href="#desolneux2000meaningful">(Desolneux, Moisan &#38; Morel, 2000)</a>，提出了一种基于概率统计的无参数决策模型——“<code>a contrario</code>”。</p>
+
+<h2 id="gestalt">格式塔（Gestalt）理论</h2>
+<p><a href="http://en.wikipedia.org/wiki/Gestalt_psychology">格式塔（Gestalt）</a>理论最早由德国心理学家Wertheimer于1912年提出。
+“格式塔”（Gestalt）一词具有两种涵义。一种涵义是指形状或形式，亦即物体的性质，例如，用“有角的”或“对称的”这样一些术语来表示物体的一般性质，以示三角形（在几何图形中）或时间序列（在曲调中）的一些特性。在这个意义上说，格式塔意即“形式”。另一种涵义是指一个具体的实体和它具有一种特殊形状或形式的特征，例如，“有角的”或“对称的”是指具体的三角形或曲调，而非第一种涵义那样意指三角形或时间序列的概念，它涉及物体本身，而不是物体的特殊形式，形式只是物体的属性之一。在这个意义上说，格式塔即任何分离的整体<sup id="fnref:zhlzw"><a href="#fn:zhlzw" class="footnote">1</a></sup>。  </p>
+
+<p>格式塔理论的基本假设是视觉感知过程中的主动分组原则，简单说来就是在视野范围内，当一些点（或者由点组成的组）具有一种或多种公共的特征时，它们就会被分为一组并形成一个更大的可见目标（也就是一个格式塔）。</p>
+
+<p>根据Gaetano Kanizsa的著作，格式塔理论基本的分组原则包括 vicinity（邻近关系）, similarity（相似性）, continuity of direction（方向的连续性）, amodal completion（补全）, closure（闭合关系）, constant width（一致的宽度）, tendency to convexity（凸包的趋势）, symmetry（对称性）, common motion（公共的运动）, past experience（过去的经验）等 <a href="#desolneux2008gestalt">(Desolneux, Moisan &#38; Morel, 2008)</a>。</p>
+
+<h2 id="helmholtz">Helmholtz原理</h2>
+<p>简单说来，Helmholtz原理是指在一个完全随机的图像上我们不能感知到任何的结构信息。采用另一种更强的说法，Helmholtz原理是指只要有一些现象大大偏离随机发生的几率，那么我们就可以从中感知到结构信息。通俗地讲就是“我们可以很容易地感知到那些不可能是随机发生的事物”<a href="#desolneux2008gestalt">(Desolneux, Moisan &#38; Morel, 2008)</a>。  </p>
+
+<p><a href="#desolneux2000meaningful">(Desolneux, Moisan &#38; Morel, 2000)</a> 将Helmholtz原理定量化了，他们给出的Helmholtz假设检验过程包含三个要素：分组方法、悖论概率模型和决策函数。</p>
+
+<h2 id="references">References</h2>
+
+<ol class="bibliography"><li><span id="desolneux2000meaningful">Desolneux, A., Moisan, L., &#38; Morel, J.-M. (2000). Meaningful alignments. <i>International Journal of Computer Vision</i>, <i>40</i>(1), 7–23.</span></li>
+<li><span id="desolneux2008gestalt">Desolneux, A., Moisan, L., &#38; Morel, J.-M. (2008). <i>From gestalt theory to image analysis: a probabilistic approach</i> (Vol. 34). Springer.</span></li></ol>
+<div class="footnotes">
+  <ol>
+    <li id="fn:zhlzw">
+      <p>[德]库尔特·考夫卡《 格式塔心理学原理》: <a href="http://www.zhlzw.com/lzsj/mz/tsxl/index.htm">http://www.zhlzw.com/lzsj/mz/tsxl/index.htm</a> <a href="#fnref:zhlzw" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+	
+
+	<hr />
+	<div class="page fix">
+		
+		<span class="prev"><a href="/blog/2013/08/06/notepad-replace-notepad">←《用Notepad++替换系统记事本》</a></span>
+		
+		
+		<span class="next"><a href="/blog/2013/10/22/Compressive-Sensing">《 压缩感知初探》→</a></span>
+		
+	</div>
+	<hr />
+  <div class="comment">
+					
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'dannpu'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</article>
+
+<script type="text/javascript"  src="/media/js/jquery-min.js"></script>
+<script type="text/javascript" src="/media/js/Fullscreen.js"></script>
+<script type="text/javascript">
+$(function() {
+	var global = window;
+
+	// =============== 全屏显示 ==================
+	(function() {
+		var icon = $( 'a.icon-fullscreen' ),
+			fs, fsCallback;
+		
+		fsCallback = function(isFullscreen) {
+				if (isFullscreen) {
+					icon.addClass('expand').attr('title', 'ESC 退出全屏');
+				}
+				else {
+					icon.removeClass('expand').attr('title', '点击全屏显示');
+				}
+			};
+			
+		fs = new Fullscreen({
+				element: $('#post'),
+				noSafari: true,
+				callback: fsCallback
+			});
+
+		if (fs.fullscreenEnabled) {
+			icon.on('click', function() {
+				fs.toggleFullscreen();
+				return false;
+			});
+		}
+		else {
+			icon.hide();
+		}
+	})();
+});
+</script>
+		</section><!--/content end-->
+		<footer id="footer">
+			<p class="l">
+				&copy;2013 <a href="/">土肥龙</a> 
+				版权所有
+				<span class="c9">|</span>
+				欢迎转载，请注明出处并保留原文链接
+			</p>
+			<p class="r">Powered by <a href="https://github.com/mojombo/jekyll" target="_blank">Jekyll</a></p>
+			<p class="tac">
+				『上善若水，水善利万物而不争』
+			</p>
+		</footer><!--/footer end-->
+    </div>
+        
+    <div id="aside-right">
+    </div>
+		
+    <script>
+	(function(d, s) {
+		var js, fjs = d.getElementsByTagName(s)[0], load = function(url, id) {
+		if (d.getElementById(id)) {return;}
+		js = d.createElement(s); js.src = url; js.id = id;
+		fjs.parentNode.insertBefore(js, fjs);
+		};
+	load('//platform.twitter.com/widgets.js', 'tweetjs');
+	// load('https://apis.google.com/js/plusone.js', 'gplus1js'); // Checkout http://j.mp/ApDgMr for usage html for this is <div class="g-plusone" data-size="medium"></div>
+	// load('//connect.facebook.net/en_US/all.js#xfbml=1', 'fbjssdk'); // Checkout http://j.mp/wZw2xR for using open graph protorol html for this is <div class="fb-like" data-href="/blog/2013/08/12/a-contrario-starting" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="verdana"></div>
+	}(document, 'script'));
+</script>
+<script>
+/*! A fix for the iOS orientationchange zoom bug.Script by @scottjehl, rebound by @wilto. MIT License.*/
+(function(j){var i=j.document;if(!i.querySelectorAll){return}var l=i.querySelectorAll("meta[name=viewport]")[0],a=l&&l.getAttribute("content"),h=a+", maximum-scale=1.0",d=a+", maximum-scale=10.0",g=true,c= j.orientation,k=0;if(!l){return}function f(){l.setAttribute("content",d);g=true}function b(){l.setAttribute("content",h);g=false}function e(m){c=Math.abs(j.orientation);k=Math.abs(m.gamma);if(k>8&&c===0){if(g){b()}}else{if(!g){f()}}}j.addEventListener("orientationchange",f,false);j.addEventListener("deviceorientation",e,false)})(this);
+</script>	
+
+	</body>
+</html>

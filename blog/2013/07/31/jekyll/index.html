@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="author" content="土肥龙">
+		<meta name="title" content="Jekyll上手篇">
+		<meta name="description" content="">
+		
+		<title>Jekyll上手篇</title>
+        <link rel="stylesheet" href="/media/css/main.css" />
+        <link rel="stylesheet" href="/media/css/favorite.css" />
+		<link rel="stylesheet" href="/media/css/pygments_native.css" />
+		<link rel="stylesheet" href="/media/css/lightbox.css" />
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Handlee">
+		<script type="text/javascript" src="/media/js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="/media/js/lightbox-2.6.min.js"></script>
+		<!---<link rel="stylesheet" href="/css/styles/monokai.css">
+        <script src="/js/highlight.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>-->
+		<!-- MathJax for LaTeX -->
+        <script type="text/x-mathjax-config"> 
+        MathJax.Hub.Config({
+            TeX: { equationNumbers: { autoNumber: "AMS" } }
+        }); 
+        </script>
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({ TeX: { extensions: ["autobold.js"] }});
+		</script>
+		<script type="text/javascript"
+			src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+		</script>
+
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ['$$$','$$$'], ["\\(","\\)"] ],
+                processEscapes: true
+            }
+        });
+        </script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+		
+    
+	</head>
+	<body>
+    <div id="aside-left">
+        <nav class="navigation">
+            <h3>导航</h3>
+            <li><a href="/">Home</a></li>
+            <li><a href="/archive.html">List</a></li>
+            <li><a href="/favorite.html">Favorite</a></li>
+            <li><a href="/tags.html">Tags</a></li>
+            <li><a href="/atom.xml">RSS</a></li>
+        </nav>
+        <nav class="navigation">
+            <h3>分类</h3>
+            
+            <li><a href="/category.html#开源">开源 (3)</a></li>
+            
+            <li><a href="/category.html#jekyll">jekyll (2)</a></li>
+            
+            <li><a href="/category.html#软件">软件 (2)</a></li>
+            
+            <li><a href="/category.html#computer vision">computer vision (3)</a></li>
+            
+            <li><a href="/category.html#parallel">parallel (1)</a></li>
+            
+        </nav>
+        <nav class="navigation">
+            <h3>链接</h3>
+            <li><a href="http://blog.sina.com.cn/loongfee" target="_blank">Sina</a></li>
+            <li><a href="http://www.cnblogs.com/loongfee/" target="_blank">cnBlog</a></li>
+        </nav>
+    </div>
+    <div id="main" role="main">
+		<header id="header">
+			<div class="header-info fix">
+				<h1><a href="/">淡朴若水</a></h1>
+                <h3>『遥感, 软件, 数学, IT杂碎』</h3>
+			</div>
+		</header><!--/header end-->
+
+		<section id="content" class="fix">
+			<script type="text/javascript" src="/media/js/navigation.js"></script>
+<article id="post">
+	<a href="#" class="icon-fullscreen r" title="点击全屏显示"></a>
+    <header>
+        <div class="unit-head">
+            <div class="unit-inner unit-head-inner">
+                <h1 id="page-title">Jekyll上手篇</h1>
+            </div><!-- unit-inner -->
+        </div><!-- unit-head -->
+    </header>
+	<div class="c9">
+		分类：
+			
+			<a href="/category.html#开源">开源</a>
+			
+			
+		&emsp;&emsp;&emsp;&emsp;
+		<time date="2013-07-31 00:00:00 +0800">2013-07-31</time>
+	</div>
+	<ul class="list-tag list-linear">
+        <li class="c9">标签：</li>
+        
+        
+
+
+  
+     
+    	<li><a href="/tags.html#Jekyll-ref">Jekyll <span>3</span></a></li>
+     
+    	<li><a href="/tags.html#Blog-ref">Blog <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#Git-ref">Git <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#Markdown-ref">Markdown <span>3</span></a></li>
+    
+  
+
+
+
+    </ul>
+
+	<h2 id="jekyllrun-jekyll-locally">1. 启动本地Jekyll服务（Run Jekyll Locally）</h2>
+<p>输入下面的命令<sup id="fnref:chengxuyuan"><a href="#fn:chengxuyuan" class="footnote">1</a></sup>。</p>
+
+<div class="highlight"><pre><code class="bash"><span class="nb">cd </span>USERNAME.github.com
+jekyll serve
+</code></pre></div>
+
+<p>其中，<code>USERNAME</code>是你的github博客用户名，也就是说需要先定位到本地博客的根目录下。
+然后，就可以通过<a href="http://localhost:4000/">http://localhost:4000/</a>来访问你的博客了。</p>
+
+<h2 id="jekyllstop-jekyll-locally">2. 停止本地Jekyll服务（Stop Jekyll Locally）</h2>
+<p>在控制台窗口中使用快捷键来停止服务：</p>
+
+<pre><code>Ctrl+C
+</code></pre>
+
+<h2 id="post">3. 创建一个post</h2>
+
+<div class="highlight"><pre><code class="bash">rake post <span class="nv">title</span><span class="o">=</span><span class="s2">&quot;Hello World&quot;</span>
+ 
+</code></pre></div>
+
+<h2 id="page">4. 创建一个page</h2>
+
+<div class="highlight"><pre><code class="bash">rake page <span class="nv">name</span><span class="o">=</span><span class="s2">&quot;about.md&quot;</span>
+ 
+</code></pre></div>
+
+<h2 id="postpage">5. 删除post或page</h2>
+<p>直接删除相应的post文件即可删除一个post<sup id="fnref:truong"><a href="#fn:truong" class="footnote">2</a></sup>。</p>
+
+<h2 id="section">6. 上传新添加的内容</h2>
+<p>只需要将新添加的内容上传到Github，Jekyll就可以帮我们生成相应的网页了。上传内容的命令如下。</p>
+
+<div class="highlight"><pre><code class="bash">git add .
+git commit -m <span class="s2">&quot;Add new content&quot;</span>
+git push origin master
+ 
+</code></pre></div>
+
+<h2 id="section-1">7. 中文编码问题</h2>
+<p>修改<code>convertible.rb</code>文件中的以下行<sup id="fnref:Neptune"><a href="#fn:Neptune" class="footnote">3</a></sup> <sup>,</sup> <sup id="fnref:oschina"><a href="#fn:oschina" class="footnote">4</a></sup>：</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="nb">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="nb">name</span><span class="p">))</span>
+</code></pre></div>
+
+<p>加入utf-8支持，改后为：</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="nb">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="nb">name</span><span class="p">),</span> <span class="ss">:encoding</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>改后即可正常处理包含中文的post。
+如果编译出现如下错误</p>
+
+<div class="highlight"><pre><code class="bash">Liquid Exception: incompatible character encodings: UTF-8 and GBK
+</code></pre></div>
+
+<p>可以尝试更改控制台编码：<code>chcp 65001</code>，改后控制台变得比较丑，但总算能解决中文编码问题。</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:chengxuyuan">
+      <p>利用Jekyll搭建个人博客:<a href="http://www.mceiba.com/develop/jekyll-introduction.html">http://www.mceiba.com/develop/jekyll-introduction.html</a> <a href="#fnref:chengxuyuan" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:truong">
+      <p>Blogging using your favorite Text editor with Git and Jekyll: <a href="http://truongtx.me/2013/05/08/blogging-using-your-favorite-text-editor-with-git-and-jekyll/">http://truongtx.me/2013/05/08/blogging-using-your-favorite-text-editor-with-git-and-jekyll/</a> <a href="#fnref:truong" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:Neptune">
+      <p>Jekyll对中文问题的处理:<a href="http://nepshi.com/2012-10-08/chinese-characters-in-jekyll/">http://nepshi.com/2012-10-08/chinese-characters-in-jekyll/</a> <a href="#fnref:Neptune" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:oschina">
+      <p>win7使用jekyll的中文编码问题: <a href="http://www.oschina.net/question/195686_72215">http://www.oschina.net/question/195686_72215</a> <a href="#fnref:oschina" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+	
+
+	<hr />
+	<div class="page fix">
+		
+		<span class="prev"><a href="/blog/2013/07/31/github">←《使用GitHub管理你的工程》</a></span>
+		
+		
+		<span class="next"><a href="/blog/2013/07/31/pandoc">《利用Pandoc将markdown文件转化为pdf》→</a></span>
+		
+	</div>
+	<hr />
+  <div class="comment">
+					
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'dannpu'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</article>
+
+<script type="text/javascript"  src="/media/js/jquery-min.js"></script>
+<script type="text/javascript" src="/media/js/Fullscreen.js"></script>
+<script type="text/javascript">
+$(function() {
+	var global = window;
+
+	// =============== 全屏显示 ==================
+	(function() {
+		var icon = $( 'a.icon-fullscreen' ),
+			fs, fsCallback;
+		
+		fsCallback = function(isFullscreen) {
+				if (isFullscreen) {
+					icon.addClass('expand').attr('title', 'ESC 退出全屏');
+				}
+				else {
+					icon.removeClass('expand').attr('title', '点击全屏显示');
+				}
+			};
+			
+		fs = new Fullscreen({
+				element: $('#post'),
+				noSafari: true,
+				callback: fsCallback
+			});
+
+		if (fs.fullscreenEnabled) {
+			icon.on('click', function() {
+				fs.toggleFullscreen();
+				return false;
+			});
+		}
+		else {
+			icon.hide();
+		}
+	})();
+});
+</script>
+		</section><!--/content end-->
+		<footer id="footer">
+			<p class="l">
+				&copy;2013 <a href="/">土肥龙</a> 
+				版权所有
+				<span class="c9">|</span>
+				欢迎转载，请注明出处并保留原文链接
+			</p>
+			<p class="r">Powered by <a href="https://github.com/mojombo/jekyll" target="_blank">Jekyll</a></p>
+			<p class="tac">
+				『上善若水，水善利万物而不争』
+			</p>
+		</footer><!--/footer end-->
+    </div>
+        
+    <div id="aside-right">
+    </div>
+		
+    <script>
+	(function(d, s) {
+		var js, fjs = d.getElementsByTagName(s)[0], load = function(url, id) {
+		if (d.getElementById(id)) {return;}
+		js = d.createElement(s); js.src = url; js.id = id;
+		fjs.parentNode.insertBefore(js, fjs);
+		};
+	load('//platform.twitter.com/widgets.js', 'tweetjs');
+	// load('https://apis.google.com/js/plusone.js', 'gplus1js'); // Checkout http://j.mp/ApDgMr for usage html for this is <div class="g-plusone" data-size="medium"></div>
+	// load('//connect.facebook.net/en_US/all.js#xfbml=1', 'fbjssdk'); // Checkout http://j.mp/wZw2xR for using open graph protorol html for this is <div class="fb-like" data-href="/blog/2013/07/31/jekyll" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="verdana"></div>
+	}(document, 'script'));
+</script>
+<script>
+/*! A fix for the iOS orientationchange zoom bug.Script by @scottjehl, rebound by @wilto. MIT License.*/
+(function(j){var i=j.document;if(!i.querySelectorAll){return}var l=i.querySelectorAll("meta[name=viewport]")[0],a=l&&l.getAttribute("content"),h=a+", maximum-scale=1.0",d=a+", maximum-scale=10.0",g=true,c= j.orientation,k=0;if(!l){return}function f(){l.setAttribute("content",d);g=true}function b(){l.setAttribute("content",h);g=false}function e(m){c=Math.abs(j.orientation);k=Math.abs(m.gamma);if(k>8&&c===0){if(g){b()}}else{if(!g){f()}}}j.addEventListener("orientationchange",f,false);j.addEventListener("deviceorientation",e,false)})(this);
+</script>	
+
+	</body>
+</html>
